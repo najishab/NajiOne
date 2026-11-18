@@ -1,0 +1,14 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build
+/app/build
+/app/release
+local.properties
+
+# Store channel build output (scripts/store-channel.js)
+/dist/
+
+

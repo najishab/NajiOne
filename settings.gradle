@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    repositories {
+        // Kept in the repository: the desugaring library (core library desugaring, for java.time
+        // on Android 7). Google Maven answers 404 from Iran, so a build there could not fetch it.
+        // Taken from the Aliyun mirror of Google Maven, SHA-1 checked against the published sums.
+        maven {
+            url = uri("$rootDir/local-maven")
+            content { includeGroup("com.android.tools") }
+        }
+        google()
+        mavenCentral()
+    }
+}
+
+include ':app'
+rootProject.name = "Naji One"
