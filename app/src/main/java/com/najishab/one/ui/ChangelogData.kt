@@ -51,7 +51,7 @@ fun changelogVersions(isFa: Boolean): List<ChangelogVersion> =
                         ChangelogItem(
                             "پوستهٔ سوم: Mosaic",
                             "چیدمان کلاسیک کاشی‌ها هم برگشت: کاشی‌های رنگی روی والپیپر، داک شیشه‌ای، پوشه‌ها و جستجو. از تنظیمات › نمایش › پوسته برنامه بین Freedom، Nexus و Mosaic انتخاب کنید. کاشی NajiWarp هم آیکون خود برنامه را گرفت، و در پوستهٔ Freedom کارت‌ها فقط نام پروتوکل را نشان می‌دهند تا قفس و پرنده بزرگ‌تر دیده شوند.",
-                            "چیدمان کلاسیک کاشی‌ها هم برگشت: کاشی‌های رنگی روی والپیپر، داک شیشه‌ای، پوشه‌ها و جستجو. از تنظیمات › نمایش › پوسته برنامه بین Freedom، Nexus و Mosaic انتخاب کنید. کاشی NajiWarp هم آیکون خود برنامه را گرفت، و در پوستهٔ Freedom کارت‌ها فقط نام پروتوکل را نشان می‌دهند تا قفس و پرنده بزرگ‌تر دیده شوند.",
+                            "چیدمان کلاسیک کاشی‌ها هم برگشت: کاشی‌های رنگی روی والپیپر، داک شیشه‌ای، پوشه‌ها و جستجو. از تنظیمات › نمایش › پوسته برنامه بین Freedom، Nexus و Mosaic انتخاب کنید. کاشی NajiWarp هم آیکون خود برنامه را گرفت.",
                             Icons.Default.Apps
                         ),
                     )
@@ -2791,6 +2791,12 @@ fun changelogVersions(isFa: Boolean): List<ChangelogVersion> =
                             "Switch skins in Settings",
                             "Settings > Display > App skin switches between Freedom and Nexus (the previous look) instantly, and the choice persists. Both skins share the same connect logic and the same catalog, and the skin travels with the «Look» backup item.",
                             Icons.Default.Palette
+                        ),
+                        ChangelogItem(
+                            "Third Theme: Mosaic",
+                            "The classic tile layout is back: colorful tiles over wallpaper, a glass dock, folders, and search. Choose between Freedom, Nexus, and Mosaic from Settings › Display › App Theme. The NajiWarp tile now uses the app's own icon, and in the Freedom theme, cards now only show the protocol name to make the cage and bird appear larger.",
+                            "The classic tile layout is back: colorful tiles over wallpaper, a glass dock, folders, and search. Choose between Freedom, Nexus, and Mosaic from Settings › Display › App Theme. The NajiWarp tile now uses the app's own icon.",
+                            Icons.Default.Apps
                         ),
                     )
                 ),

@@ -938,7 +938,11 @@ private fun DisplayPage(
                 title = tr("پوسته برنامه", "App skin"),
                 icon = Icons.Default.AutoAwesome,
                 tint = Ios.Orange,
-                value = if (SkinPrefs.skin == AppSkin.FREEDOM) "Freedom" else "Nexus",
+                value = when (SkinPrefs.skin) {
+                    AppSkin.FREEDOM -> "Freedom"
+                    AppSkin.NEXUS -> "Nexus"
+                    AppSkin.MOSAIC -> "Mosaic"
+                },
                 onClick = onOpenSkin,
             )
         }

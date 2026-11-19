@@ -412,84 +412,88 @@ fun AppScreen() {
                             }
                         }
                     }
-                    if (visitedTabs.contains("settings")) {
-                        Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "settings") 0.dp else 10000.dp)) {
-                            val skin = SkinPrefs.skin
+                if (visitedTabs.contains("settings")) {
+                    Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "settings") 0.dp else 10000.dp)) {
+                        val skin = SkinPrefs.skin
+                        CompositionLocalProvider(
+                            LocalTabVisible provides (activeTab == "settings"),
+                            com.najishab.one.ui.nexus.LocalNexusSkin provides (skin == AppSkin.NEXUS),
+                            LocalFreedomSkin provides (skin == AppSkin.FREEDOM),
+                        ) {
+                          Box(
+                              Modifier.fillMaxSize().then(
+                                  when (skin) {
+                                      AppSkin.NEXUS -> Modifier.nexusBackdrop()
+                                      AppSkin.FREEDOM -> Modifier.freedomBackdrop()
+                                      AppSkin.MOSAIC -> Modifier
+                                  }
+                              )
+                          ) {
                             CompositionLocalProvider(
-                                LocalTabVisible provides (activeTab == "vpn_settings"),
-                                com.najishab.one.ui.nexus.LocalNexusSkin provides (skin == AppSkin.NEXUS),
-                                LocalFreedomSkin provides (skin == AppSkin.FREEDOM),
+                                LocalSystemBottomPadding provides (LocalSystemBottomPadding.current + when (skin) {
+                                    AppSkin.FREEDOM -> FREEDOM_NAV_RESERVE
+                                    AppSkin.NEXUS -> com.najishab.one.ui.nexus.NEXUS_NAV_RESERVE
+                                    AppSkin.MOSAIC -> 0.dp
+                                }),
                             ) {
-                              Box(
-                                  Modifier.fillMaxSize().then(
-                                      when (skin) {
-                                          AppSkin.NEXUS -> Modifier.nexusBackdrop()
-                                          AppSkin.FREEDOM -> Modifier.freedomBackdrop()
-                                          AppSkin.MOSAIC -> Modifier
-                                      }
-                                  )
-                              ) {
-                                // Settings keeps clear of the active skin's bar drawn over it below.
-                                CompositionLocalProvider(
-                                    LocalSystemBottomPadding provides (LocalSystemBottomPadding.current + when (skin) {
-                                        AppSkin.FREEDOM -> FREEDOM_NAV_RESERVE
-                                        AppSkin.NEXUS -> com.najishab.one.ui.nexus.NEXUS_NAV_RESERVE
-                                        AppSkin.MOSAIC -> 0.dp
-                                    }),
-                                ) {
-                                    com.najishab.one.ui.settings.SettingsScreen(
-                                        openRoute = settingsRoute,
-                                        onRouteOpened = { settingsRoute = null },
-                                        onDismiss = { goBack() },
-                                        onOpenVpnSettings = { openTab("vpn_settings") },
-                                        onOpenCloud = { openTab("cloud") },
-                                        onOpenUsage = { openTab("usage") },
-                                    )
-                                }
-                                // The same bar as Home, with Settings selected: the other three go
-                                // back to the page they name, in whichever skin is active.
-                                when (skin) {
-                                    AppSkin.FREEDOM -> FreedomBottomBar(
-                                        selected = FreedomPage.SETTINGS,
-                                        onSelect = { target ->
-                                            if (target != FreedomPage.SETTINGS) {
-                                                freedomPage = target.name
-                                                switchTab(homeTab)
-                                            }
-                                        },
-                                        modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
-                                    )
-                                    AppSkin.NEXUS -> com.najishab.one.ui.nexus.NexusBottomBar(
-                                        selected = com.najishab.one.ui.nexus.NexusPage.SETTINGS,
-                                        onSelect = { target ->
-                                            if (target != com.najishab.one.ui.nexus.NexusPage.SETTINGS) {
-                                                nexusPage = target.name
-                                                switchTab(homeTab)
-                                            }
-                                        },
-                                        modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
-                                    )
-                                    // Mosaic has no bar: its dock lives on the board itself.
-                                    AppSkin.MOSAIC -> Unit
-                                }
-                              }
+                                com.najishab.one.ui.settings.SettingsScreen(
+                                    openRoute = settingsRoute,
+                                    onRouteOpened = { settingsRoute = null },
+                                    onDismiss = { goBack() },
+                                    onOpenVpnSettings = { openTab("vpn_settings") },
+                                    onOpenCloud = { openTab("cloud") },
+                                    onOpenUsage = { openTab("usage") },
+                                )
                             }
+                            when (skin) {
+                                AppSkin.FREEDOM -> FreedomBottomBar(
+                                    selected = FreedomPage.SETTINGS,
+                                    onSelect = { target ->
+                                        if (target != FreedomPage.SETTINGS) {
+                                            freedomPage = target.name
+                                            switchTab(homeTab)
+                                        }
+                                    },
+                                    modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
+                                )
+                                AppSkin.NEXUS -> com.najishab.one.ui.nexus.NexusBottomBar(
+                                    selected = com.najishab.one.ui.nexus.NexusPage.SETTINGS,
+                                    onSelect = { target ->
+                                        if (target != com.najishab.one.ui.nexus.NexusPage.SETTINGS) {
+                                            nexusPage = target.name
+                                            switchTab(homeTab)
+                                        }
+                                    },
+                                    modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
+                                )
+                                AppSkin.MOSAIC -> Unit
+                            }
+                          }
                         }
                     }
+                }
                     if (visitedTabs.contains("vpn_settings")) {
-                        Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "vpn_settings") 0.dp else 10000.dp)) {
-                            val freedom = SkinPrefs.skin == AppSkin.FREEDOM
-                            CompositionLocalProvider(
-                                LocalTabVisible provides (activeTab == "vpn_settings"),
-                                com.najishab.one.ui.nexus.LocalNexusSkin provides !freedom,
-                                LocalFreedomSkin provides freedom,
-                            ) {
-                              Box(Modifier.fillMaxSize().then(if (freedom) Modifier.freedomBackdrop() else Modifier.nexusBackdrop())) {
-                                com.najishab.one.ui.settings.VpnSettingsScreen(onDismiss = { goBack() })
-                              }
-                            }
+                    Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "vpn_settings") 0.dp else 10000.dp)) {
+                        val skin = SkinPrefs.skin
+                        CompositionLocalProvider(
+                            LocalTabVisible provides (activeTab == "vpn_settings"),
+                            com.najishab.one.ui.nexus.LocalNexusSkin provides (skin == AppSkin.NEXUS),
+                            LocalFreedomSkin provides (skin == AppSkin.FREEDOM),
+                        ) {
+                          Box(
+                              Modifier.fillMaxSize().then(
+                                  when (skin) {
+                                      AppSkin.NEXUS -> Modifier.nexusBackdrop()
+                                      AppSkin.FREEDOM -> Modifier.freedomBackdrop()
+                                      AppSkin.MOSAIC -> Modifier
+                                  }
+                              )
+                          ) {
+                            com.najishab.one.ui.settings.VpnSettingsScreen(onDismiss = { goBack() })
+                          }
                         }
                     }
+                }
                     if (visitedTabs.contains("usage")) {
                         Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "usage") 0.dp else 10000.dp)) {
                             CompositionLocalProvider(LocalTabVisible provides (activeTab == "usage")) {
