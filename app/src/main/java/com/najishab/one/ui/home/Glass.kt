@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import com.najishab.one.ui.freedom.freedomCard
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
@@ -67,6 +68,8 @@ fun Modifier.frostedGlass(
 ): Modifier {
     // Under the NEXUS skin (Settings) a card is NEXUS glass, not a slice of the wallpaper.
     if (com.najishab.one.ui.nexus.LocalNexusSkin.current) return this.nexusGlass(shape)
+    // Under the FREEDOM skin (Settings) a card is the mockup's flat card with its hairline.
+    if (com.najishab.one.ui.freedom.LocalFreedomSkin.current) return this.freedomCard(shape)
     val dark = Appearance.isDark()
     // Read from state, not from the View. See LocalWindowSizePx for why that mattered.
     val windowSize = com.najishab.one.ui.LocalWindowSizePx.current

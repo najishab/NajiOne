@@ -115,7 +115,7 @@ object NexusCatalog {
 }
 
 /** Short, factual one-liners taken from what each destination already is. */
-private fun describe(id: String): String? = when (id) {
+internal fun describe(id: String): String? = when (id) {
     "scout" -> tr("کدام روش روی این خط کار می‌کند", "Which method works on this line")
     "masque" -> tr("تونل MASQUE از لبهٔ Cloudflare", "MASQUE tunnel to Cloudflare's edge")
     "wireguard" -> tr("WireGuard تا لبهٔ Cloudflare", "WireGuard to Cloudflare's edge")

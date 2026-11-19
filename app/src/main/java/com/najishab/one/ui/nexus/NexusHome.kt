@@ -1,6 +1,5 @@
 package com.najishab.one.ui.nexus
 
-import android.app.Activity
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.asImageBitmap
@@ -8,9 +7,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.core.content.ContextCompat
 import com.najishab.one.R
-import android.net.VpnService
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -52,10 +48,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,22 +79,17 @@ import com.najishab.one.store.tr
 import com.najishab.one.ui.LocalSystemBottomPadding
 import com.najishab.one.ui.LocalSystemTopPadding
 import com.najishab.one.ui.home.HomeApp
-import com.najishab.one.widget.WidgetConnect
-import com.najishab.one.widget.WidgetConnectService
 import com.najishab.one.widget.WidgetFormat
 import com.najishab.one.widget.WidgetLive
 import com.najishab.one.widget.WidgetMethods
 import com.najishab.one.widget.WidgetPainter
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
-
-/** What the NEXUS Home shows. ERROR is a failed attempt, never confused with a live link. */
-internal enum class LinkState { OFF, CONNECTING, ON, ERROR }
+import com.najishab.one.ui.skin.LinkState
+import com.najishab.one.ui.skin.rememberLinkController
 
 /** Height the shell's floating bottom bar takes, so a page's content can clear it. */
 internal val NEXUS_NAV_RESERVE = 104.dp
@@ -113,7 +101,6 @@ fun NexusHome(
     onChooseMethod: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val conn = session.conn
     val last = session.last
     // Collected only while this page is on screen: collecting is what keeps the 1 s sampler going.
@@ -124,63 +111,11 @@ fun NexusHome(
     }
     val app = WidgetMethods.app(session.shown)
 
-    // ERROR: a connect that ended without ever reaching CONNECTED and that the user did not cancel.
-    // Derived from the real phase flow; cleared on the next attempt, or after a few seconds.
-    var failed by remember { mutableStateOf(false) }
-    var userStopped by remember { mutableStateOf(false) }
-    var prevPhase by remember { mutableStateOf(conn.phase) }
-    LaunchedEffect(conn.phase) {
-        if (prevPhase == WidgetLive.Phase.CONNECTING && conn.phase == WidgetLive.Phase.IDLE && !userStopped) failed = true
-        if (conn.phase != WidgetLive.Phase.IDLE) failed = false
-        prevPhase = conn.phase
-    }
-    LaunchedEffect(failed) {
-        if (failed) {
-            delay(12_000)
-            failed = false
-        }
-    }
-    val state = when {
-        conn.up -> LinkState.ON
-        conn.busy -> LinkState.CONNECTING
-        failed -> LinkState.ERROR
-        else -> LinkState.OFF
-    }
-
-    // The existing connect path, unchanged: VPN consent if needed, then the widget service connects
-    // the last method. Nothing here knows about any engine.
-    val consent = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
-        val m = last
-        if (res.resultCode == Activity.RESULT_OK && m != null) WidgetConnectService.start(context, m, null)
-    }
-    val scope = rememberCoroutineScope()
-    fun connectLast() {
-        val m = last ?: return
-        if (com.najishab.one.data.ScanGuard.isScanBusy()) {
-            android.widget.Toast.makeText(
-                context,
-                tr("یک اسکن در حال اجراست؛ اول آن را متوقف کنید", "A scan is running; stop it first"),
-                android.widget.Toast.LENGTH_LONG,
-            ).show()
-            return
-        }
-        userStopped = false
-        failed = false
-        scope.launch {
-            val prep = withContext(kotlinx.coroutines.Dispatchers.IO) { runCatching { VpnService.prepare(context) }.getOrNull() }
-            if (prep != null) runCatching { consent.launch(prep) } else WidgetConnectService.start(context, m, null)
-        }
-    }
-    val onPower: () -> Unit = {
-        when {
-            conn.busy -> {
-                userStopped = true
-                WidgetConnect.disconnect(context)
-            }
-            last != null -> connectLast()
-            else -> onChooseMethod()
-        }
-    }
+    // The connect path lives in rememberLinkController (ui/skin) now, shared with the Freedom
+    // skin. With no override it behaves exactly as before: last method, consent, cancel, error.
+    val link = rememberLinkController(session, onChooseMethod)
+    val state = link.state
+    val onPower = link.onPower
 
     val top = LocalSystemTopPadding.current
     val bottom = LocalSystemBottomPadding.current
@@ -285,7 +220,7 @@ private fun stateWord(state: LinkState): String = when (state) {
  * so it is sharp at every density and is rebuilt only when that pixel size changes.
  */
 @Composable
-private fun AppIconMark(size: Dp) {
+internal fun AppIconMark(size: Dp) {
     val context = LocalContext.current
     val px = with(LocalDensity.current) { size.roundToPx() }.coerceAtLeast(1)
     val bitmap = remember(px) {

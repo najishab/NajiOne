@@ -68,6 +68,7 @@ internal object MainItems {
                     "app_text_scale_auto", "home_label_scale", "wallpaper_id", "wallpaper_blur",
                     "home_icon_order", "home_folders", "home_folders_v1", "home_scout_promoted_v1", "home_lantern_promoted_v1",
                     "home_connection_widget", "home_widgetstudio_promoted_v1",
+                    "app_skin", "freedom_preferred_method", "freedom_recent_methods",
                 ),
             ),
         ),

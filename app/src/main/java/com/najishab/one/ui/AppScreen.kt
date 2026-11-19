@@ -3,6 +3,14 @@ package com.najishab.one.ui
 import com.najishab.one.ui.theme.*
 import androidx.compose.animation.Crossfade
 import com.najishab.one.ui.nexus.nexusBackdrop
+import com.najishab.one.ui.freedom.FREEDOM_NAV_RESERVE
+import com.najishab.one.ui.freedom.FreedomBottomBar
+import com.najishab.one.ui.freedom.FreedomPage
+import com.najishab.one.ui.freedom.FreedomShell
+import com.najishab.one.ui.freedom.LocalFreedomSkin
+import com.najishab.one.ui.freedom.freedomBackdrop
+import com.najishab.one.ui.skin.AppSkin
+import com.najishab.one.ui.skin.SkinPrefs
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -109,6 +117,8 @@ fun AppScreen() {
     // Held here, not inside the shell, so that coming back from a method's screen lands on the page
     // the user left. Settings is a hosted tab of its own, not a NEXUS page.
     var nexusPage by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(com.najishab.one.ui.nexus.NexusPage.HOME.name) }
+        // The same, for the FREEDOM shell. Kept separately so switching skins lands each on its own page.
+    var freedomPage by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(FreedomPage.HOME.name) }
     // A settings page requested from somewhere else; consumed on arrival. Declared here rather
     // than beside the tab hosts because the update notice, which lives at the root of this
     // composable, is one of the things that asks for one.
@@ -170,7 +180,10 @@ fun AppScreen() {
             // the one screen that is supposed to own it.
             activeTab != homeTab -> switchTab(homeTab)
             // On Methods or Tools, back goes to NEXUS Home first; only Home offers to exit.
-            nexusPage != com.najishab.one.ui.nexus.NexusPage.HOME.name -> nexusPage = com.najishab.one.ui.nexus.NexusPage.HOME.name
+                        SkinPrefs.skin == AppSkin.NEXUS && nexusPage != com.najishab.one.ui.nexus.NexusPage.HOME.name ->
+                nexusPage = com.najishab.one.ui.nexus.NexusPage.HOME.name
+            SkinPrefs.skin == AppSkin.FREEDOM && freedomPage != FreedomPage.HOME.name ->
+                freedomPage = FreedomPage.HOME.name
             else -> showExitDialog = true
         }
     }
@@ -401,14 +414,16 @@ fun AppScreen() {
                     }
                     if (visitedTabs.contains("settings")) {
                         Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "settings") 0.dp else 10000.dp)) {
+                            val freedom = SkinPrefs.skin == AppSkin.FREEDOM
                             CompositionLocalProvider(
                                 LocalTabVisible provides (activeTab == "settings"),
-                                com.najishab.one.ui.nexus.LocalNexusSkin provides true,
+                                com.najishab.one.ui.nexus.LocalNexusSkin provides !freedom,
+                                LocalFreedomSkin provides freedom,
                             ) {
-                              Box(Modifier.fillMaxSize().nexusBackdrop()) {
-                                // Settings keeps clear of the NEXUS bar drawn over it below.
+                              Box(Modifier.fillMaxSize().then(if (freedom) Modifier.freedomBackdrop() else Modifier.nexusBackdrop())) {
+                                // Settings keeps clear of the active skin's bar drawn over it below.
                                 CompositionLocalProvider(
-                                    LocalSystemBottomPadding provides (LocalSystemBottomPadding.current + com.najishab.one.ui.nexus.NEXUS_NAV_RESERVE),
+                                    LocalSystemBottomPadding provides (LocalSystemBottomPadding.current + if (freedom) FREEDOM_NAV_RESERVE else com.najishab.one.ui.nexus.NEXUS_NAV_RESERVE),
                                 ) {
                                     com.najishab.one.ui.settings.SettingsScreen(
                                         openRoute = settingsRoute,
@@ -420,28 +435,43 @@ fun AppScreen() {
                                     )
                                 }
                                 // The same bar as Home, with Settings selected: the other three go
-                                // back to the NEXUS page they name.
-                                com.najishab.one.ui.nexus.NexusBottomBar(
-                                    selected = com.najishab.one.ui.nexus.NexusPage.SETTINGS,
-                                    onSelect = { target ->
-                                        if (target != com.najishab.one.ui.nexus.NexusPage.SETTINGS) {
-                                            nexusPage = target.name
-                                            switchTab(homeTab)
-                                        }
-                                    },
-                                    modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
-                                )
+                                // back to the page they name, in whichever skin is active.
+                                if (freedom) {
+                                    FreedomBottomBar(
+                                        selected = FreedomPage.SETTINGS,
+                                        onSelect = { target ->
+                                            if (target != FreedomPage.SETTINGS) {
+                                                freedomPage = target.name
+                                                switchTab(homeTab)
+                                            }
+                                        },
+                                        modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
+                                    )
+                                } else {
+                                    com.najishab.one.ui.nexus.NexusBottomBar(
+                                        selected = com.najishab.one.ui.nexus.NexusPage.SETTINGS,
+                                        onSelect = { target ->
+                                            if (target != com.najishab.one.ui.nexus.NexusPage.SETTINGS) {
+                                                nexusPage = target.name
+                                                switchTab(homeTab)
+                                            }
+                                        },
+                                        modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
+                                    )
+                                }
                               }
                             }
                         }
                     }
                     if (visitedTabs.contains("vpn_settings")) {
                         Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "vpn_settings") 0.dp else 10000.dp)) {
+                            val freedom = SkinPrefs.skin == AppSkin.FREEDOM
                             CompositionLocalProvider(
                                 LocalTabVisible provides (activeTab == "vpn_settings"),
-                                com.najishab.one.ui.nexus.LocalNexusSkin provides true,
+                                com.najishab.one.ui.nexus.LocalNexusSkin provides !freedom,
+                                LocalFreedomSkin provides freedom,
                             ) {
-                              Box(Modifier.fillMaxSize().nexusBackdrop()) {
+                              Box(Modifier.fillMaxSize().then(if (freedom) Modifier.freedomBackdrop() else Modifier.nexusBackdrop())) {
                                 com.najishab.one.ui.settings.VpnSettingsScreen(onDismiss = { goBack() })
                               }
                             }
@@ -639,23 +669,33 @@ fun AppScreen() {
         // active screen -- unlike the tabs it holds no work worth preserving, since the icon
         // order is persisted the moment a drag ends.
         if (onHome) {
-            // NEXUS replaces the old icon board. Every destination of that board is still opened by
-            // the same rule (a modal screen or a tab), only reached through VPN Methods / Tools.
-            com.najishab.one.ui.nexus.NexusShell(
-                page = com.najishab.one.ui.nexus.NexusPage.valueOf(nexusPage),
-                onPage = { nexusPage = it.name },
-                onOpen = { app ->
-                    when {
-                        app.opensAsModal -> activeModal = app.id
-                        else -> openTab(app.id)
-                    }
-                },
-                // A Settings row the search found: Settings on its page, where the row shows itself.
-                onOpenSetting = { route ->
-                    settingsRoute = route
-                    openTab("settings")
-                },
-            )
+            // The landing screen wears the active skin. Both shells open every destination by the
+            // same rule (a modal screen or a tab); only the presentation differs.
+            val openApp: (com.najishab.one.ui.home.HomeApp) -> Unit = { app ->
+                when {
+                    app.opensAsModal -> activeModal = app.id
+                    else -> openTab(app.id)
+                }
+            }
+            // A Settings row the search found: Settings on its page, where the row shows itself.
+            val openSetting: (String) -> Unit = { route ->
+                settingsRoute = route
+                openTab("settings")
+            }
+            when (SkinPrefs.skin) {
+                AppSkin.FREEDOM -> FreedomShell(
+                    page = FreedomPage.valueOf(freedomPage),
+                    onPage = { freedomPage = it.name },
+                    onOpen = openApp,
+                    onOpenSetting = openSetting,
+                )
+                AppSkin.NEXUS -> com.najishab.one.ui.nexus.NexusShell(
+                    page = com.najishab.one.ui.nexus.NexusPage.valueOf(nexusPage),
+                    onPage = { nexusPage = it.name },
+                    onOpen = openApp,
+                    onOpenSetting = openSetting,
+                )
+            }
         }
     }
 

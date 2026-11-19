@@ -264,6 +264,10 @@ internal object SettingsIndex {
             keywords = listOf("تم", "Theme", "تاریک", "روشن", "Dark", "Light", "حالت شب", "Night"),
         ),
         SettingsEntry(
+            SText.Lit("پوسته برنامه", "App skin"), SettingsRoutes.DISPLAY, listOf(display), { Icons.Default.AutoAwesome }, Hue.ORANGE,
+            keywords = listOf("پوسته", "Skin", "Freedom", "Nexus", "ظاهر", "طرح", "Design", "UI", "آزادی", "نکسوس"),
+        ),
+        SettingsEntry(
             SText.Lit("ویجت اتصال در صفحهٔ اصلی", "Connection widget on the home screen"), SettingsRoutes.DISPLAY, listOf(display),
             { Icons.Default.ViewQuilt }, Hue.BLUE,
             subtitle = SText.Lit("روش متصل، کشور خروج، نمودار زنده، مصرف و دکمهٔ قطع", "The method on, its exit country, a live chart, usage and a disconnect button"),

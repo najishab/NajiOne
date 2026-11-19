@@ -176,12 +176,15 @@ object Ios {
     // answer with the NEXUS palette; the warm ones keep their meaning (orange, red, pink, yellow).
     val Blue: Color
         @Composable get() = if (com.najishab.one.ui.nexus.LocalNexusSkin.current) com.najishab.one.ui.nexus.Nexus.Blue
+            else if (com.najishab.one.ui.freedom.LocalFreedomSkin.current) com.najishab.one.ui.freedom.Freedom.Bird
             else if (Appearance.isDark()) Color(0xFF0A84FF) else Color(0xFF007AFF)
     val Green: Color
         @Composable get() = if (com.najishab.one.ui.nexus.LocalNexusSkin.current) com.najishab.one.ui.nexus.Nexus.Mint
+            else if (com.najishab.one.ui.freedom.LocalFreedomSkin.current) com.najishab.one.ui.freedom.Freedom.Ok
             else if (Appearance.isDark()) Color(0xFF32D74B) else Color(0xFF34C759)
     val Indigo: Color
         @Composable get() = if (com.najishab.one.ui.nexus.LocalNexusSkin.current) com.najishab.one.ui.nexus.Nexus.Indigo
+            else if (com.najishab.one.ui.freedom.LocalFreedomSkin.current) com.najishab.one.ui.freedom.Freedom.Cage
             else if (Appearance.isDark()) Color(0xFF5E5CE6) else Color(0xFF5856D6)
     val Orange: Color
         @Composable get() = if (Appearance.isDark()) Color(0xFFFF9F0A) else Color(0xFFFF9500)
@@ -189,11 +192,13 @@ object Ios {
         @Composable get() = if (Appearance.isDark()) Color(0xFFFF375F) else Color(0xFFFF2D55)
     val Purple: Color
         @Composable get() = if (com.najishab.one.ui.nexus.LocalNexusSkin.current) com.najishab.one.ui.nexus.Nexus.Violet
+            else if (com.najishab.one.ui.freedom.LocalFreedomSkin.current) com.najishab.one.ui.freedom.Freedom.Sunrise
             else if (Appearance.isDark()) Color(0xFFBF5AF2) else Color(0xFFAF52DE)
     val Red: Color
         @Composable get() = if (Appearance.isDark()) Color(0xFFFF453A) else Color(0xFFFF3B30)
     val Teal: Color
         @Composable get() = if (com.najishab.one.ui.nexus.LocalNexusSkin.current) com.najishab.one.ui.nexus.Nexus.Cyan
+            else if (com.najishab.one.ui.freedom.LocalFreedomSkin.current) com.najishab.one.ui.freedom.Freedom.Sky
             else if (Appearance.isDark()) Color(0xFF64D2FF) else Color(0xFF32ADE6)
     val Yellow: Color
         @Composable get() = if (Appearance.isDark()) Color(0xFFFFD60A) else Color(0xFFFFCC00)
@@ -215,11 +220,12 @@ private val GlyphShape = RoundedCornerShape(8.dp)
 @Composable
 fun SettingsSectionHeader(text: String, horizontal: androidx.compose.ui.unit.Dp = 20.dp) {
     val nexus = com.najishab.one.ui.nexus.LocalNexusSkin.current
+    val freedom = com.najishab.one.ui.freedom.LocalFreedomSkin.current
     Text(
         text = text,
-        color = if (nexus) com.najishab.one.ui.nexus.Nexus.Cyan else Ios.SecondaryLabel,
+        color = if (nexus) com.najishab.one.ui.nexus.Nexus.Cyan else if (freedom) com.najishab.one.ui.freedom.Freedom.Ok else Ios.SecondaryLabel,
         fontSize = 13.sp,
-        fontWeight = if (nexus) FontWeight.SemiBold else null,
+        fontWeight = if (nexus || freedom) FontWeight.SemiBold else null,
         modifier = Modifier.padding(start = horizontal, end = horizontal, top = 26.dp, bottom = 7.dp),
     )
 }

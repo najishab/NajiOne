@@ -92,6 +92,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.najishab.one.utils.S
+import com.najishab.one.store.tr
+import com.najishab.one.ui.skin.AppSkin
+import com.najishab.one.ui.skin.SkinPrefs
 
 /** Routes inside Settings. A page is pushed; back pops it. */
 private const val P_LANGUAGE = "language"
@@ -107,6 +110,7 @@ private const val P_DISPLAY = "display"
 private const val P_WALLPAPER = "wallpaper"
 private const val P_WALLPAPER_PICK = "wallpaper_pick"
 private const val P_THEME = "theme"
+private const val P_SKIN = "app_skin"
 /** The Cloudflare resources hub, reached from the row under the account card. */
 private const val P_CF_RESOURCES = "cf_resources"
 
@@ -438,6 +442,7 @@ fun SettingsScreen(
             onBack = { pop() },
             onOpenWallpaper = { push(P_WALLPAPER) },
             onOpenTheme = { push(P_THEME) },
+            onOpenSkin = { push(P_SKIN) },
         )
 
         P_THEME -> IosPickerScreen(
@@ -448,6 +453,11 @@ fun SettingsScreen(
             footer = stringResource(R.string.settings_theme_desc),
             onBack = { pop() },
             onSelect = { Appearance.setTheme(context, it) },
+        )
+
+        P_SKIN -> SkinPickerPage(
+            backLabel = stringResource(R.string.settings_display),
+            onBack = { pop() },
         )
 
         P_WALLPAPER -> WallpaperPage(
@@ -885,6 +895,7 @@ private fun DisplayPage(
     onBack: () -> Unit,
     onOpenWallpaper: () -> Unit,
     onOpenTheme: () -> Unit,
+    onOpenSkin: () -> Unit,
 ) {
     val context = LocalContext.current
     val current = Wallpapers.current
@@ -921,6 +932,14 @@ private fun DisplayPage(
                 tint = Ios.Indigo,
                 value = themeLabel,
                 onClick = onOpenTheme,
+            )
+            Separator()
+            SettingsRow(
+                title = tr("پوسته برنامه", "App skin"),
+                icon = Icons.Default.AutoAwesome,
+                tint = Ios.Orange,
+                value = if (SkinPrefs.skin == AppSkin.FREEDOM) "Freedom" else "Nexus",
+                onClick = onOpenSkin,
             )
         }
 

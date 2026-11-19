@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         // the one they see on launch rather than a flash of the default.
         com.najishab.one.ui.home.Wallpapers.init(this)
         com.najishab.one.ui.home.Appearance.init(this)
+        com.najishab.one.ui.skin.SkinPrefs.init(this)
+        com.najishab.one.ui.skin.FreedomPrefs.init(this)
 
         com.najishab.one.engines.subgenerator.SubGenManager(this).startAutoSync()
 

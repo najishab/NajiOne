@@ -215,6 +215,10 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation 'androidx.compose.material:material-icons-extended'
+    // Freedom skin: the caged-bird Lottie (res/raw/freedom_bird.json). 6.1.0 is built against
+    // Compose BOM 2023.06, so it sits under this module's 2023.10.01 pins without dragging
+    // compose-runtime past 1.5.4 or the lifecycle fence past 2.7.0.
+    implementation 'com.airbnb.android:lottie-compose:6.1.0'
     // WebView proxy override (lets Proton's sign-in page ride another engine's local listener) is
     // androidx.webkit 1.8.0, shipped as libs/webkit-1.8.0.aar (picked up by the libs fileTree below)
     // and NOT as a Maven dependency: Google's Maven answers 404 from Iranian addresses, so the build

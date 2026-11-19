@@ -34,6 +34,22 @@ data class ChangelogVersion(
 fun changelogVersions(isFa: Boolean): List<ChangelogVersion> =
         if (isFa) {
             listOf(
+
+                ChangelogVersion(
+                    "نسخه 1.1.2",
+                    listOf(
+                        ChangelogItem(
+                            "پوستهٔ تازهٔ Freedom، پیش‌فرض برنامه",
+                            "صفحهٔ اصلی از نو طراحی شد: پرنده‌ای در قفس که با اتصال قفس می‌شکند، پرنده آزاد می‌شود و سپیده‌دم می‌رسد. سه کارت پروتکل (MAE، FLUX، WARP²) روش اتصال بعدی را انتخاب می‌کنند، سرعت زنده و کشور خروج واقعی نمایش داده می‌شود و چهار زبانهٔ پایین (خانه، موتورها، ابر و ابزار، تنظیمات) همهٔ روش‌ها و ابزارهای پیشین را در بر می‌گیرد.",
+                            Icons.Default.AutoAwesome
+                        ),
+                        ChangelogItem(
+                            "تغییر پوسته از تنظیمات",
+                            "در تنظیمات › نمایش › پوسته برنامه می‌توانید بین Freedom و Nexus (ظاهر پیشین) جابه‌جا شوید؛ بلافاصله اعمال می‌شود و ذخیره می‌ماند. هر دو پوسته یک منطق اتصال و یک فهرست روش‌ها دارند و پوسته در پشتیبان‌گیری «ظاهر» هم می‌آید.",
+                            Icons.Default.Palette
+                        ),
+                    )
+                ),
                 ChangelogVersion(
                     "نسخه 1.2.45",
                     listOf(
@@ -2757,6 +2773,21 @@ fun changelogVersions(isFa: Boolean): List<ChangelogVersion> =
             )
         } else {
             listOf(
+                ChangelogVersion(
+                    "Version 1.1.2",
+                    listOf(
+                        ChangelogItem(
+                            "The new Freedom skin, now the default",
+                            "Home was redesigned: a caged bird that breaks free when you connect -- the cage opens, the bird soars and dawn arrives. Three protocol cards (MAE, FLUX, WARP²) pick the method for the next connect, live speed and the real exit country are shown, and the four bottom tabs (Home, Engines, Cloud & Tools, Settings) reach every method and tool the old board had.",
+                            Icons.Default.AutoAwesome
+                        ),
+                        ChangelogItem(
+                            "Switch skins in Settings",
+                            "Settings > Display > App skin switches between Freedom and Nexus (the previous look) instantly, and the choice persists. Both skins share the same connect logic and the same catalog, and the skin travels with the «Look» backup item.",
+                            Icons.Default.Palette
+                        ),
+                    )
+                ),
                 ChangelogVersion(
                     "Version 1.2.45",
                     listOf(
