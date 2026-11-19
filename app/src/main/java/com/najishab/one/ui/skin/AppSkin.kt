@@ -9,7 +9,7 @@ import androidx.preference.PreferenceManager
 import com.najishab.one.widget.WidgetMethods
 
 /** The two skins the app ships with. FREEDOM is the default; NEXUS is the previous look, kept whole. */
-enum class AppSkin { FREEDOM, NEXUS }
+enum class AppSkin { FREEDOM, NEXUS, MOSAIC }
 
 /**
  * Which skin the app wears, mirrored as Compose state the way [com.najishab.one.ui.home.Appearance]
@@ -24,8 +24,10 @@ object SkinPrefs {
 
     /** Seeds from disk. Called once, at activity start, next to Appearance.init. */
     fun init(context: Context) {
-        val v = PreferenceManager.getDefaultSharedPreferences(context).getString(KEY, null)
-        skin = if (v == "nexus") AppSkin.NEXUS else AppSkin.FREEDOM
+        skin = when (PreferenceManager.getDefaultSharedPreferences(context).getString(KEY, null)) {
+            "nexus" -> AppSkin.NEXUS
+            "mosaic" -> AppSkin.MOSAIC
+            else -> AppSkin.FREEDOM
     }
 
     fun set(context: Context, value: AppSkin) {

@@ -414,16 +414,28 @@ fun AppScreen() {
                     }
                     if (visitedTabs.contains("settings")) {
                         Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "settings") 0.dp else 10000.dp)) {
-                            val freedom = SkinPrefs.skin == AppSkin.FREEDOM
+                            val skin = SkinPrefs.skin
                             CompositionLocalProvider(
-                                LocalTabVisible provides (activeTab == "settings"),
-                                com.najishab.one.ui.nexus.LocalNexusSkin provides !freedom,
-                                LocalFreedomSkin provides freedom,
+                                LocalTabVisible provides (activeTab == "vpn_settings"),
+                                com.najishab.one.ui.nexus.LocalNexusSkin provides (skin == AppSkin.NEXUS),
+                                LocalFreedomSkin provides (skin == AppSkin.FREEDOM),
                             ) {
-                              Box(Modifier.fillMaxSize().then(if (freedom) Modifier.freedomBackdrop() else Modifier.nexusBackdrop())) {
+                              Box(
+                                  Modifier.fillMaxSize().then(
+                                      when (skin) {
+                                          AppSkin.NEXUS -> Modifier.nexusBackdrop()
+                                          AppSkin.FREEDOM -> Modifier.freedomBackdrop()
+                                          AppSkin.MOSAIC -> Modifier
+                                      }
+                                  )
+                              ) {
                                 // Settings keeps clear of the active skin's bar drawn over it below.
                                 CompositionLocalProvider(
-                                    LocalSystemBottomPadding provides (LocalSystemBottomPadding.current + if (freedom) FREEDOM_NAV_RESERVE else com.najishab.one.ui.nexus.NEXUS_NAV_RESERVE),
+                                    LocalSystemBottomPadding provides (LocalSystemBottomPadding.current + when (skin) {
+                                        AppSkin.FREEDOM -> FREEDOM_NAV_RESERVE
+                                        AppSkin.NEXUS -> com.najishab.one.ui.nexus.NEXUS_NAV_RESERVE
+                                        AppSkin.MOSAIC -> 0.dp
+                                    }),
                                 ) {
                                     com.najishab.one.ui.settings.SettingsScreen(
                                         openRoute = settingsRoute,
@@ -436,8 +448,8 @@ fun AppScreen() {
                                 }
                                 // The same bar as Home, with Settings selected: the other three go
                                 // back to the page they name, in whichever skin is active.
-                                if (freedom) {
-                                    FreedomBottomBar(
+                                when (skin) {
+                                    AppSkin.FREEDOM -> FreedomBottomBar(
                                         selected = FreedomPage.SETTINGS,
                                         onSelect = { target ->
                                             if (target != FreedomPage.SETTINGS) {
@@ -447,8 +459,7 @@ fun AppScreen() {
                                         },
                                         modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
                                     )
-                                } else {
-                                    com.najishab.one.ui.nexus.NexusBottomBar(
+                                    AppSkin.NEXUS -> com.najishab.one.ui.nexus.NexusBottomBar(
                                         selected = com.najishab.one.ui.nexus.NexusPage.SETTINGS,
                                         onSelect = { target ->
                                             if (target != com.najishab.one.ui.nexus.NexusPage.SETTINGS) {
@@ -458,6 +469,8 @@ fun AppScreen() {
                                         },
                                         modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter),
                                     )
+                                    // Mosaic has no bar: its dock lives on the board itself.
+                                    AppSkin.MOSAIC -> Unit
                                 }
                               }
                             }
@@ -693,6 +706,20 @@ fun AppScreen() {
                     page = com.najishab.one.ui.nexus.NexusPage.valueOf(nexusPage),
                     onPage = { nexusPage = it.name },
                     onOpen = openApp,
+                    onOpenSetting = openSetting,
+                )
+                // Mosaic: the classic tile board, unchanged. It reads the same registry through
+                // HomeLayoutStore, so NajiWarp and every later engine are on it by themselves.
+                AppSkin.MOSAIC -> HomeScreen(
+                    isRunning = isRunning,
+                    showTraffic = showRealtimeTraffic,
+                    trafficDown = trafficDown,
+                    trafficUp = trafficUp,
+                    onOpen = openApp,
+                    onOpenUpdate = {
+                        settingsRoute = com.najishab.one.ui.settings.ROUTE_UPDATE_DOWNLOAD
+                        openTab("settings")
+                    },
                     onOpenSetting = openSetting,
                 )
             }

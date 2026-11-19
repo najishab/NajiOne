@@ -39,13 +39,15 @@ internal fun FreedomBird(
     reduced: Boolean,
     areaW: Dp,
     areaH: Dp,
+    size: Dp,
     modifier: Modifier = Modifier,
 ) {
-    // The cage slot is at (50%, 57.5%); 43dp is half the bird, 4dp a margin. Keep the flight within.
-    val headroom = (areaH * 0.575f - 47.dp).coerceAtLeast(24.dp)
+    // The cage slot is at (50%, 57.5%); half the bird plus a 4dp margin must stay inside.
+    val inset = size / 2f + 4.dp
+    val headroom = (areaH * 0.575f - inset).coerceAtLeast(24.dp)
     val rise = minOf(80.dp, headroom * 0.72f)
     val extra = minOf(24.dp, headroom * 0.23f)
-    val xAmp = minOf(90.dp, (areaW * 0.5f - 47.dp).coerceAtLeast(24.dp))
+    val xAmp = minOf(90.dp, (areaW * 0.5f - inset).coerceAtLeast(24.dp))
     val riseY = -rise
     val peakY = -(rise + extra)
 
@@ -117,7 +119,7 @@ internal fun FreedomBird(
         composition, iterations = LottieConstants.IterateForever, speed = speed, isPlaying = animate,
     )
     Box(
-        modifier.size(86.dp).graphicsLayer {
+        modifier.size(size).graphicsLayer {
             translationX = x.value.dp.toPx()
             translationY = y.value.dp.toPx()
             rotationZ = rot.value

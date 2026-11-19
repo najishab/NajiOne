@@ -74,9 +74,18 @@ internal fun SkinPickerPage(backLabel: String, onBack: () -> Unit) {
             onClick = { SkinPrefs.set(context, AppSkin.NEXUS) },
             preview = { drawNexusPreview() },
         )
+        Spacer(Modifier.height(12.dp))
+        SkinCard(
+            name = "Mosaic",
+            desc = tr("کاشی‌های رنگی روی والپیپر با داک شیشه‌ای — چیدمان کلاسیک برنامه", "Colourful tiles on your wallpaper with a glass dock — the classic board"),
+            accent = Color(0xFF007AFF),
+            selected = SkinPrefs.skin == AppSkin.MOSAIC,
+            onClick = { SkinPrefs.set(context, AppSkin.MOSAIC) },
+            preview = { drawMosaicPreview() },
+        )
         Text(
-            tr("بلافاصله اعمال می‌شود و برای دفعات بعد ذخیره می‌ماند. هر دو پوسته یک منطق اتصال و یک فهرست روش‌ها دارند.",
-               "Applies immediately and is kept for next time. Both skins share the same connect logic and the same list of methods."),
+            tr("بلافاصله اعمال می‌شود و برای دفعات بعد ذخیره می‌ماند. هر سه پوسته یک منطق اتصال و یک فهرست روش‌ها دارند.",
+               "Applies immediately and is kept for next time. All three skins share the same connect logic and the same list of methods."),
             color = Ios.SecondaryLabel, fontSize = 13.sp,
             modifier = Modifier.padding(start = 32.dp, end = 32.dp, top = 10.dp),
         )
@@ -160,4 +169,33 @@ private fun DrawScope.drawNexusPreview() {
     drawArc(Color.White, startAngle = -60f, sweepAngle = 300f, useCenter = false,
         topLeft = Offset(c.x - g, c.y - g), size = Size(g * 2, g * 2), style = Stroke(r * 0.09f, cap = StrokeCap.Round))
     drawLine(Color.White, Offset(c.x, c.y - g * 1.2f), Offset(c.x, c.y - g * 0.1f), strokeWidth = r * 0.09f, cap = StrokeCap.Round)
+}
+/** Mosaic in miniature: the wallpaper, a 4x2 board of squircles, and the glass dock. */
+private fun DrawScope.drawMosaicPreview() {
+    drawRect(Brush.verticalGradient(0f to Color(0xFF24365C), 0.6f to Color(0xFF33456B), 1f to Color(0xFF121A2C)))
+    val cols = 4; val rows = 2
+    val pad = 12.dp.toPx(); val gap = 9.dp.toPx(); val dockH = 20.dp.toPx()
+    val cellW = (size.width - pad * 2 - gap * (cols - 1)) / cols
+    val cellH = (size.height - pad * 2 - gap * (rows - 1) - dockH - 8.dp.toPx()) / rows
+    val cell = minOf(cellW, cellH).coerceAtLeast(6.dp.toPx())
+    val gridW = cell * cols + gap * (cols - 1)
+    val left = (size.width - gridW) / 2f
+    val tints = listOf(
+        Color(0xFF007AFF), Color(0xFF34C759), Color(0xFF5856D6), Color(0xFFFF9500),
+        Color(0xFFFF2D55), Color(0xFF5AC8FA), Color(0xFFAF52DE), Color(0xFFFFCC00),
+    )
+    for (r in 0 until rows) for (c in 0 until cols) {
+        val i = r * cols + c
+        val x = left + c * (cell + gap); val y = pad + r * (cell + gap)
+        val crr = CornerRadius(cell * 0.28f, cell * 0.28f)
+        drawRoundRect(tints[i % tints.size], topLeft = Offset(x, y), size = Size(cell, cell), cornerRadius = crr)
+        drawRoundRect(Color.White.copy(alpha = 0.16f), topLeft = Offset(x, y), size = Size(cell, cell * 0.42f), cornerRadius = crr)
+    }
+    val dockY = size.height - dockH - 8.dp.toPx()
+    drawRoundRect(Color.White.copy(alpha = 0.16f), topLeft = Offset(pad, dockY), size = Size(size.width - pad * 2, dockH), cornerRadius = CornerRadius(dockH / 2f, dockH / 2f))
+    for (c in 0 until 4) {
+        val q = dockH * 0.6f
+        val x = pad + (size.width - pad * 2) * (c + 0.5f) / 4f - q / 2f
+        drawRoundRect(tints[c], topLeft = Offset(x, dockY + (dockH - q) / 2f), size = Size(q, q), cornerRadius = CornerRadius(q * 0.28f, q * 0.28f))
+    }
 }

@@ -73,6 +73,8 @@ data class HomeApp(
      * [icon]. [icon] stays as the fallback and for the places that want a Material glyph.
      */
     val glyphRes: Int? = null,
+    /** Wear the app's own launcher icon (@mipmap/ic_launcher) instead of artwork or a glyph. */
+    val launcherIcon: Boolean = false,
 )
 
 object HomeDestinations {
@@ -158,7 +160,7 @@ object HomeDestinations {
         // «وارپ»: plain WARP on an engine of its own, with the desktop's artwork.
         HomeApp("warp",              R.string.home_warp,          Icons.Default.Cloud,         Teal,   imageRes = R.drawable.ic_app_warp),
         // «NajiWarp»: compatible MASQUE / HTTP/3 Cloudflare engine with onboarding wizard
-        HomeApp("najiwarp",          R.string.home_najiwarp,      Icons.Default.RocketLaunch,  Orange, imageRes = R.drawable.ic_app_warp),
+        HomeApp("najiwarp",          R.string.home_najiwarp,      Icons.Default.RocketLaunch,  Orange, launcherIcon = true),
         // Psiphon's own mark, seated on the app's squircle in the red the mark is already
         // painted in -- so the disc's edge disappears into the tile instead of reading as a
         // circle in a square hole. Hub/Indigo stay as the fallback glyph; see HomeApp.imageRes.

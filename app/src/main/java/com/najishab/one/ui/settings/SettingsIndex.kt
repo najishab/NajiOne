@@ -265,7 +265,7 @@ internal object SettingsIndex {
         ),
         SettingsEntry(
             SText.Lit("پوسته برنامه", "App skin"), SettingsRoutes.DISPLAY, listOf(display), { Icons.Default.AutoAwesome }, Hue.ORANGE,
-            keywords = listOf("پوسته", "Skin", "Freedom", "Nexus", "ظاهر", "طرح", "Design", "UI", "آزادی", "نکسوس"),
+            keywords = listOf("پوسته", "Skin", "Freedom", "Nexus", "Mosaic", "موزاییک", "کاشی", "Board", "ظاهر", "طرح", "Design", "UI", "آزادی", "نکسوس"),
         ),
         SettingsEntry(
             SText.Lit("ویجت اتصال در صفحهٔ اصلی", "Connection widget on the home screen"), SettingsRoutes.DISPLAY, listOf(display),

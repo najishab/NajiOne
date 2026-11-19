@@ -52,6 +52,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
@@ -63,6 +64,17 @@ import com.najishab.one.ui.skin.LinkState
 import kotlin.math.PI
 import kotlin.math.cos
 
+/**
+ * The cage's width for a scene of [w] x [h]. It grows with the scene instead of staying at the
+ * mockup's fixed 188dp, so the extra height Home now gives the scene is spent on the cage and the
+ * bird rather than on empty sky. Two bounds keep it whole: it must fit above and below its centre
+ * (48% of the height), and it must leave room either side for the bird's soar. 210dp is the ceiling.
+ */
+internal fun freedomCageWidth(w: Dp, h: Dp): Dp {
+    val byHeight = (h * 0.96f - 8.dp) * (220f / 260f)
+    val byWidth = w * 0.62f
+    return minOf(210.dp, byHeight, byWidth).coerceAtLeast(120.dp)
+}
 /**
  * The Freedom scene: a caged bird under a night sky that breaks free into dawn when the link comes
  * up. Every value here is the mockup's (cage 188x222dp over a 220x260 viewBox, halves ±25° in
@@ -133,8 +145,9 @@ internal fun FreedomScene(state: LinkState, modifier: Modifier = Modifier) {
             .border(1.dp, Freedom.Border, shape)
             .semantics { contentDescription = desc }
     ) {
-        val birdX = maxWidth * 0.5f - 43.dp
-        val birdY = maxHeight * 0.575f - 43.dp
+        val birdSize = (freedomCageWidth(maxWidth, maxHeight) * 0.46f).coerceIn(60.dp, 100.dp)
+        val birdX = maxWidth * 0.5f - birdSize / 2f
+        val birdY = maxHeight * 0.575f - birdSize / 2f
         Canvas(Modifier.fillMaxSize()) {
             drawScene(model, state, split, lockDrop, dawn, sun, warm, far, motion)
         }
@@ -144,6 +157,7 @@ internal fun FreedomScene(state: LinkState, modifier: Modifier = Modifier) {
             reduced = reduced,
             areaW = maxWidth,
             areaH = maxHeight,
+            size = birdSize,
             modifier = Modifier.align(Alignment.TopStart).offset(x = birdX, y = birdY),
         )
         if (flash.value > 0.01f) {
@@ -315,8 +329,8 @@ private fun DrawScope.drawScene(
             center = Offset(w * mt.x, h * (1f - mt.fromBottom) - 17.dp.toPx() * rise),
         )
     }
-    // The cage: 188dp wide over the 220x260 viewBox, centred at (50%, 48%).
-    val cageW = 188.dp.toPx()
+    /// The cage over the 220x260 viewBox, centred at (50%, 48%), sized to the scene.
+    val cageW = freedomCageWidth(size.width.toDp(), size.height.toDp()).toPx()
     val s = cageW / 220f
     val cageH = 260f * s
     val ox = w * 0.5f - cageW * 0.5f

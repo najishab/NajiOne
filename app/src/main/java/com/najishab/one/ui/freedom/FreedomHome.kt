@@ -75,7 +75,6 @@ import com.najishab.one.ui.home.HomeDestinations
 import com.najishab.one.ui.nexus.AppIconMark
 import com.najishab.one.ui.nexus.NexusCatalog
 import com.najishab.one.ui.nexus.NexusSession
-import com.najishab.one.ui.nexus.describe
 import com.najishab.one.ui.skin.FreedomPrefs
 import com.najishab.one.ui.skin.LinkState
 import com.najishab.one.ui.skin.rememberLinkController
@@ -133,7 +132,7 @@ fun FreedomHome(
     val top = LocalSystemTopPadding.current
     val bottom = LocalSystemBottomPadding.current
     BoxWithConstraints(modifier.fillMaxSize().freedomBackdrop()) {
-        val compact = maxHeight < 680.dp || LocalDensity.current.fontScale > 1.15f
+        val compact = maxHeight < 640.dp || LocalDensity.current.fontScale > 1.15f
         Column(
             Modifier
                 .fillMaxSize()
@@ -145,7 +144,7 @@ fun FreedomHome(
             FreedomScene(
                 state,
                 Modifier.fillMaxWidth().then(
-                    if (compact) Modifier.height(300.dp) else Modifier.weight(1f).heightIn(min = 220.dp)
+                    if (compact) Modifier.height(340.dp) else Modifier.weight(1f).heightIn(min = 260.dp)
                 ),
             )
             FreedomStatus(state, conn, engineName)
@@ -313,7 +312,6 @@ private fun ProtoCard(app: HomeApp, selected: Boolean, modifier: Modifier = Modi
     val name = WidgetPainter.labelOf(app)
     val tint = app.tint
     val iconBg = app.tint.copy(alpha = 0.16f)
-    val proto = describe(app.id) ?: tr("روش اتصال", "Connection method")
     val shape = RoundedCornerShape(16.dp)
     Box(
         modifier.clip(shape).background(if (selected) Freedom.Card2 else Freedom.Card)
@@ -326,7 +324,6 @@ private fun ProtoCard(app: HomeApp, selected: Boolean, modifier: Modifier = Modi
                 Text(name.take(2).uppercase(), color = tint, fontSize = 11.sp, fontWeight = FontWeight.Black)
             }
             Text(name, color = Freedom.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 7.dp))
-            Text(proto, color = Freedom.Muted, fontSize = 10.5.sp, fontWeight = FontWeight.Bold, maxLines = 2, modifier = Modifier.padding(top = 2.dp))
         }
         if (selected) {
             Box(Modifier.align(Alignment.TopEnd).size(17.dp).clip(CircleShape).background(Freedom.Ok), contentAlignment = Alignment.Center) {
@@ -344,15 +341,15 @@ private fun SpeedCard(state: LinkState, traffic: WidgetLive.Traffic) {
         rememberInfiniteTransition(label = "speed dot")
             .animateFloat(0.35f, 1f, infiniteRepeatable(tween(900, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "blink").value
     } else 1f
-    Column(Modifier.fillMaxWidth().padding(top = 9.dp).freedomCard(RoundedCornerShape(20.dp)).padding(horizontal = 13.dp, vertical = 11.dp)) {
+    Column(Modifier.fillMaxWidth().padding(top = 9.dp).freedomCard(RoundedCornerShape(18.dp)).padding(horizontal = 13.dp, vertical = 7.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.size(7.dp).clip(CircleShape).background(if (up) Freedom.Ok.copy(alpha = blink) else Freedom.ChipDot))
-            Spacer(Modifier.width(7.dp))
-            Text(tr("سرعت زنده", "Live speed"), color = Freedom.Muted, fontSize = 10.5.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+            Box(Modifier.size(6.dp).clip(CircleShape).background(if (up) Freedom.Ok.copy(alpha = blink) else Freedom.ChipDot))
+            Spacer(Modifier.width(6.dp))
+            Text(tr("سرعت زنده", "Live speed"), color = Freedom.Muted, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
         }
-        Row(Modifier.fillMaxWidth().padding(top = 9.dp)) {
+        Row(Modifier.fillMaxWidth().padding(top = 6.dp)) {
             SpeedCol(tr("دانلود", "Download"), Icons.Default.Download, Freedom.Ok, Color(0xFF0D2B21), if (up) traffic.rxRate else 0L, if (up) traffic.down else LongArray(0), Modifier.weight(1f).padding(end = 12.dp))
-            Box(Modifier.width(1.dp).height(64.dp).background(Freedom.Border))
+            Box(Modifier.width(1.dp).height(50.dp).background(Freedom.Border))
             SpeedCol(tr("آپلود", "Upload"), Icons.Default.Upload, Freedom.Sky, Color(0xFF12283F), if (up) traffic.txRate else 0L, if (up) traffic.up else LongArray(0), Modifier.weight(1f).padding(start = 12.dp))
         }
     }
@@ -362,15 +359,15 @@ private fun SpeedCard(state: LinkState, traffic: WidgetLive.Traffic) {
 private fun SpeedCol(label: String, icon: ImageVector, tint: Color, iconBg: Color, rate: Long, samples: LongArray, modifier: Modifier = Modifier) {
     Column(modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.size(24.dp).clip(RoundedCornerShape(8.dp)).background(iconBg), contentAlignment = Alignment.Center) {
-                Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(13.dp))
+            Box(Modifier.size(20.dp).clip(RoundedCornerShape(7.dp)).background(iconBg), contentAlignment = Alignment.Center) {
+                Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(11.dp))
             }
-            Spacer(Modifier.width(7.dp))
-            Text(label, color = Freedom.Muted, fontSize = 10.5.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.6.sp)
+            Spacer(Modifier.width(6.dp))
+            Text(label, color = Freedom.Muted, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.6.sp)
         }
-        Text(WidgetFormat.rate(rate), color = Freedom.Text, fontSize = 20.sp, fontWeight = FontWeight.Bold, maxLines = 1, style = LocalTextStyle.current.copy(fontFeatureSettings = "tnum"), modifier = Modifier.padding(top = 5.dp))
+        Text(WidgetFormat.rate(rate), color = Freedom.Text, fontSize = 17.sp, fontWeight = FontWeight.Bold, maxLines = 1, style = LocalTextStyle.current.copy(fontFeatureSettings = "tnum"), modifier = Modifier.padding(top = 2.dp))
         val path = remember { Path() }
-        Canvas(Modifier.fillMaxWidth().padding(top = 3.dp).height(22.dp)) {
+        Canvas(Modifier.fillMaxWidth().padding(top = 2.dp).height(14.dp)) {
             val n = samples.size.coerceAtMost(40)
             if (n < 2) return@Canvas
             var max = 1L
@@ -379,10 +376,10 @@ private fun SpeedCol(label: String, icon: ImageVector, tint: Color, iconBg: Colo
             for (i in 0 until n) {
                 val v = samples[samples.size - n + i].toFloat()
                 val x = i / 39f * size.width
-                val y = size.height - 3.dp.toPx() - (v / max) * (size.height - 7.dp.toPx())
+                val y = size.height - 2.dp.toPx() - (v / max) * (size.height - 5.dp.toPx())
                 if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
             }
-            drawPath(path, tint, style = Stroke(2.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round))
+            drawPath(path, tint, style = Stroke(1.6.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round))
         }
     }
 }

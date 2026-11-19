@@ -214,6 +214,21 @@ internal fun TileFace(
     shadow: Boolean = true,
 ) {
     val elevation = if (shadow) 6.dp else 0.dp
+    // The app's own engine wears the app's own mark. Rasterised through the Drawable API
+    // (AppIconMark) because on API 26+ the launcher icon is adaptive and painterResource cannot
+    // load one; clipped to the same squircle as its neighbours so the row reads as one family.
+    if (app.launcherIcon) {
+        Box(
+            modifier = modifier
+                .size(size)
+                .shadow(elevation = elevation, shape = Squircle, clip = false)
+                .clip(Squircle),
+            contentAlignment = Alignment.Center,
+        ) {
+            com.najishab.one.ui.nexus.AppIconMark(size)
+        }
+        return
+    }
     if (app.imageRes != null) {
         // Finished artwork: it brings its own background and its own corner shape, so nothing is
         // drawn behind it and it is not clipped. Clipping would shave the corners of a silhouette
