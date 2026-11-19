@@ -1,0 +1,43 @@
+name: Android Build Debug
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # این خط به شما دکمه «اجرای دستی» می‌دهد
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ۱. دریافت کدهای پروژه
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # ۲. نصب جاوا ۱۷ (پیش‌نیاز گرادل)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # ۳. راه‌اندازی و کش گرادل برای افزایش سرعت بیلد
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      # ۴. مجاز کردن فایل اجرایی گرادل
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # ۵. اجرای دستور بیلد دقیقاً معادل دستور سیستم شما
+      - name: Build with Gradle
+        run: ./gradlew :app:assembleDebug --stacktrace
+
+      # ۶. ذخیره و قرار دادن فایل خروجی APK برای دانلود
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NajiOne-Debug-APK
+          path: app/build/outputs/apk/debug/*.apk
