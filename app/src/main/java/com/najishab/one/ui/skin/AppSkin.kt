@@ -9,7 +9,7 @@ import androidx.preference.PreferenceManager
 import com.najishab.one.widget.WidgetMethods
 
 /** The two skins the app ships with. FREEDOM is the default; NEXUS is the previous look, kept whole. */
-enum class AppSkin { FREEDOM, NEXUS }
+enum class AppSkin { FREEDOM, NEXUS, MOSAIC }
 
 /**
  * Which skin the app wears, mirrored as Compose state the way [com.najishab.one.ui.home.Appearance]
