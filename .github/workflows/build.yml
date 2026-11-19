@@ -12,8 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ۱. دریافت کدها همراه با فایل‌های حجیم Git LFS
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -21,19 +24,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # ۲. تنظیم گرادل و فعال کردن Build Scan
       - name: Setup Gradle 8.13
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: '8.13'
+          build-scan-publish: true
+          build-scan-terms-of-use-url: 'https://gradle.com/help/legal-terms-of-use'
+          build-scan-terms-of-use-agree: 'yes'
 
-      # حذف مسیر SDK ویندوز در صورت وجود
       - name: Clean Windows sdk.dir from local.properties
         run: |
           if [ -f "local.properties" ]; then
             sed -i '/^sdk\.dir=/d' local.properties
           fi
 
-      # هدایت دانلودها به سرور بدون محدودیت گوگل با گرامر صحیح Groovy
       - name: Route Maven Central to Google Mirror
         run: |
           find . -type f -name "*.gradle" -exec sed -i "s|mavenCentral()|maven { url 'https://maven-central.storage-download.googleapis.com/maven2/' }; mavenCentral()|g" {} +
@@ -46,8 +51,23 @@ jobs:
           fi
           chmod +x gradlew
 
+      # ۳. بررسی فایل‌های so و aar موجود روی سرور قبل از بیلد
+      - name: Check native libs in repo
+        run: |
+          find . -type f \( -name "*.so" -o -name "*.aar" \) -exec ls -lh {} + || true
+
+      # ۴. اجرای بیلد با اسکن کامل
       - name: Build with Gradle
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: ./gradlew :app:assembleDebug --scan --stacktrace
+
+      # ۵. بررسی فایل‌های so داخل APK خروجی و حجم دقیق فایل‌ها
+      - name: Inspect built APKs
+        run: |
+          find app/build/outputs/apk -name "*.apk" | while read -r f; do
+            echo "=== $f ==="
+            ls -lh "$f"
+            unzip -l "$f" | grep "\.so" || echo "No .so files found"
+          done
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
