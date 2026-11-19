@@ -27,7 +27,7 @@ jobs:
       - name: Setup Gradle 8
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '8.13.2'
+          gradle-version: '8.13'
 
       # ۴. حل قطعی خطای 429 با تغییر خودکار آدرس‌ها به سرور گوگل
       - name: Route Maven Central to Google Mirror
@@ -38,7 +38,7 @@ jobs:
       - name: Ensure gradlew exists and is executable
         run: |
           if [ ! -f "gradlew" ]; then
-            gradle wrapper --gradle-version 8.13.2
+            gradle wrapper --gradle-version 8.13
           fi
           chmod +x gradlew
 
