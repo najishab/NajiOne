@@ -34,6 +34,8 @@ object LastEngineReplay {
         when (val last = LastEngine.read(app)) {
             null -> return false
             is LastEngine.Record.Tunnel -> connectTransport(app, last.transportId)
+            is LastEngine.Record.NajiWarp ->
+                com.najishab.one.engines.najiwarp.NajiWarpEngine.start(app, com.najishab.one.engines.najiwarp.NajiWarpPreferences(app).loadConfig())
 
             is LastEngine.Record.OpenVpn -> {
                 val known = withContext(Dispatchers.IO) {

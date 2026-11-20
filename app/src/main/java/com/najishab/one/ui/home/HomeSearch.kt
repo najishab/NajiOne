@@ -123,6 +123,7 @@ internal val TileAliases: Map<String, List<String>> = mapOf(
     "mae" to listOf("موتور تطبیقی", "Adaptive engine"),
     "flux" to listOf("فلاکس"),
     "fenix" to listOf("فنیکس", "Firefox", "فایرفاکس"),
+    "najiwarp" to listOf("ناجی وارپ", "NajiWarp", "وارپ", "MASQUE", "HTTP3"),
     "amnezia" to listOf("AmneziaWG", "Hysteria", "هیستریا"),
     "outline" to listOf("اوتلاین", "Shadowsocks"),
     "urnetwork" to listOf("یو آر نتورک", "یوآر", "UR", "ur.io", "BringYour"),

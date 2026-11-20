@@ -301,6 +301,7 @@ class NajiWarpVpnService : VpnService() {
                         )
                     )
                     updateNotification("متصل (${transport?.uppercase() ?: "H3"})")
+                    com.najishab.one.data.LastEngine.recordNajiWarp(this@NajiWarpVpnService)
                 }
                 "error" -> fail(gen, warning ?: errorCode ?: "خطا در اتصال هسته MASQUE")
             }

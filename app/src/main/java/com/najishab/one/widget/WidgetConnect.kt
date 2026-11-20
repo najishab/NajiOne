@@ -130,6 +130,9 @@ object WidgetConnect {
                 if (npv.best(com.najishab.one.engines.npv.NpvLibrary.entries(app)) != null) Ready.Yes
                 else Ready.Setup(tr("هنوز فایل NPV اجراشدنی ندارید", "No runnable NPV file yet"))
             }
+            "najiwarp" ->
+                if (com.najishab.one.engines.najiwarp.NajiWarpPreferences(app).isOnboardingCompleted) Ready.Yes
+                else Ready.Setup(tr("اول در صفحهٔ NajiWarp اکانت وارپ را تنظیم کنید", "Set up your WARP account on NajiWarp's page first"))
             else -> Ready.Setup(tr("برای ادامه، صفحهٔ این روش را باز کنید", "Open this method's page to go on"))
         }
     }
@@ -243,6 +246,10 @@ object WidgetConnect {
                 // A native or remote NPV entry has no config of its own to run.
                 val uri = best.uri ?: return@withContext false
                 npv.connect(app, uri)
+                true
+            }
+            "najiwarp" -> {
+                com.najishab.one.engines.najiwarp.NajiWarpEngine.start(app, com.najishab.one.engines.najiwarp.NajiWarpPreferences(app).loadConfig())
                 true
             }
             else -> false
@@ -411,6 +418,7 @@ object WidgetConnect {
             "mae" -> runCatching { com.najishab.one.engines.mae.MaeEngine.stopTunnelAsync(app) }
             "vpngate" -> runCatching { com.najishab.one.engines.vpngate.VpnGateStore.markDisconnected(app) }
             "emergency_3" -> Thread({ runCatching { com.najishab.one.engines.rstaspoof.SniSession.disconnect(app) } }, "widget-sni-stop").start()
+            "najiwarp" -> runCatching { com.najishab.one.engines.najiwarp.NajiWarpEngine.stop(app) }
         }
         VpnSwitch.stopAll(app)
         WidgetLive.clearRequested()

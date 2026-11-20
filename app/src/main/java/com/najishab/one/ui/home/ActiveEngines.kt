@@ -54,13 +54,15 @@ object ActiveEngines {
         val sniSession by MyVpnService.sniSessionFlow.collectAsState()
         val amz by com.najishab.one.engines.amnezia.AmzEngine.connect.collectAsState()
         val amzServer = amzServerOf(amz)
+        val najiwarp by com.najishab.one.engines.najiwarp.NajiWarpEngine.phase.collectAsState()
+        val najiwarpUp = najiwarp is com.najishab.one.engines.najiwarp.NajiWarpPhase.CONNECTED
 
         // Keyed on every input, so the set is rebuilt when an engine changes and NOT on the many
         // other recompositions the board goes through -- a drag re-runs the grid on every touch
         // move, and `xrayHome` reads preferences and parses the saved-server list.
         val tunnelId = tunnel.active?.id?.takeIf { tunnel.stage == TunnelStage.RUNNING }
-        return remember(tunnelId, xrayRunning, xrayNode, sniSession, openvpn.phase, openvpn.profileId, amzServer) {
-            compute(context, tunnelId, xrayRunning, xrayNode, sniSession, openvpn.phase, amzServer, openvpn.profileId)
+        return remember(tunnelId, xrayRunning, xrayNode, sniSession, openvpn.phase, openvpn.profileId, amzServer, najiwarpUp) {
+            compute(context, tunnelId, xrayRunning, xrayNode, sniSession, openvpn.phase, amzServer, openvpn.profileId, najiwarpUp)
         }
     }
 
@@ -79,6 +81,8 @@ object ActiveEngines {
             com.najishab.one.openvpn.OpenVpnRuntime.connection.value.phase,
             amzServerOf(com.najishab.one.engines.amnezia.AmzEngine.connect.value),
             com.najishab.one.openvpn.OpenVpnRuntime.connection.value.profileId,
+            com.najishab.one.engines.najiwarp.NajiWarpEngine.phase.value is com.najishab.one.engines.najiwarp.NajiWarpPhase.CONNECTED,
+        )
         )
     }
 
@@ -111,7 +115,9 @@ object ActiveEngines {
         openvpnPhase: com.najishab.one.openvpn.ConnectionPhase,
         amzServer: String?,
         openvpnProfile: String?,
+        najiwarpUp: Boolean,
     ): Set<String> = buildSet {
+        if (najiwarpUp) add("najiwarp")
         if (openvpnPhase == com.najishab.one.openvpn.ConnectionPhase.CONNECTED)
             add("openvpn")
         tunnelId?.let { add(it) }

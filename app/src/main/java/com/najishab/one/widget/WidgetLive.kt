@@ -169,6 +169,7 @@ object WidgetLive {
             com.najishab.one.engines.flux.FluxEngine.ui,
             com.najishab.one.engines.outline.OutlineEngine.connect,
             com.najishab.one.engines.fenix.FenixEngine.conn,
+            com.najishab.one.engines.najiwarp.NajiWarpEngine.phase,
             EngineLadder.running,
             countryWanted,
         )
@@ -267,6 +268,7 @@ object WidgetLive {
                 "amnezia" -> com.najishab.one.engines.amnezia.AmzEngine.let {
                     if (it.isInitialized()) it.connect.value is com.najishab.one.engines.amnezia.AmzConnect.Connected else service
                 }
+                "najiwarp" -> com.najishab.one.engines.najiwarp.NajiWarpEngine.phase.value is com.najishab.one.engines.najiwarp.NajiWarpPhase.CONNECTED
                 else -> service
             }
         }.getOrDefault(service)
@@ -294,6 +296,10 @@ object WidgetLive {
         if (outline.isInitialized() && outline.connect.value is com.najishab.one.engines.outline.OutlineConnect.Connecting) return "outline"
         val fenix = com.najishab.one.engines.fenix.FenixEngine
         if (fenix.isInitialized() && fenix.conn.value is com.najishab.one.engines.fenix.FenixEngine.Conn.Connecting) return "fenix"
+        val nw = com.najishab.one.engines.najiwarp.NajiWarpEngine.phase.value
+        if (nw is com.najishab.one.engines.najiwarp.NajiWarpPhase.PREPARING ||
+            nw is com.najishab.one.engines.najiwarp.NajiWarpPhase.CONNECTING ||
+            nw is com.najishab.one.engines.najiwarp.NajiWarpPhase.HANDSHAKE) return "najiwarp"
         if (EngineLadder.running.value) return ""
         return null
     }
@@ -329,6 +335,8 @@ object WidgetLive {
         val code: String? = when {
             tunnel.active?.id == method -> tunnel.country
             method == "openvpn" -> com.najishab.one.openvpn.OpenVpnRuntime.connection.value.exitCountry
+            method == "najiwarp" -> (runCatching { com.najishab.one.engines.najiwarp.NajiWarpEngine.phase.value }.getOrNull()
+            as? com.najishab.one.engines.najiwarp.NajiWarpPhase.CONNECTED)?.colo
             method == "fenix" -> (runCatching { com.najishab.one.engines.fenix.FenixEngine.conn.value }.getOrNull()
                 as? com.najishab.one.engines.fenix.FenixEngine.Conn.Connected)?.let { it.exitCountry ?: it.country }
             method == "flux" -> (runCatching { com.najishab.one.engines.flux.FluxEngine.ui.value }.getOrNull()

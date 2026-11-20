@@ -82,7 +82,7 @@ object NexusCatalog {
     private val TOOLS_MORE = listOf("scout", "store", "widgetstudio")
 
     private val PROTOCOLS = listOf(
-        "masque", "wireguard", "warp", "warp_on_warp", "psiphon", "tor", "lantern", "geph",
+        "masque", "wireguard", "warp", "warp_on_warp", "najiwarp", "psiphon", "tor", "lantern", "geph",
         "urnetwork", "flux", "outline", "npv", "amnezia", "vpngate" , "openvpn"
     )
     private val PLATFORMS = listOf("fenix", "mae")

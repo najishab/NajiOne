@@ -17,7 +17,7 @@ import com.najishab.one.ui.home.HomeDestinations
 object WidgetMethods {
 
     val IDS: List<String> = listOf(
-        "masque", "wireguard", "warp_on_warp", "warp", "psiphon", "tor", "geph", "lantern", "urnetwork",
+        "masque", "wireguard", "warp_on_warp", "warp", "najiwarp", "psiphon", "tor", "geph", "lantern", "urnetwork",
         "mae", "flux", "fenix", "amnezia", "outline", "npv",
         "vpngate", "openvpn", "nodes", "iran", "fronting", "emergency_2", "emergency_3",
     )

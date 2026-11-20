@@ -49,6 +49,8 @@ object LastEngine {
 
         /** An OpenVPN profile (its own service, [com.najishab.one.openvpn.OpenVpnService]), with its account. */
         data class OpenVpn(val profileId: String, val accountId: String) : Record()
+        /** NajiWarp (its own service); the config is rebuilt from preferences. */
+        object NajiWarp : Record()
     }
 
     private fun prefs(context: Context) =
@@ -78,6 +80,13 @@ object LastEngine {
      */
     const val AMNEZIA_MARKER = "amnezia"
     const val OUTLINE_MARKER = "outline"
+    const val NAJIWARP_MARKER = "najiwarp"
+    private const val KIND_NAJIWARP = "najiwarp"
+
+    /** On NajiWarp's CONNECTED. */
+    fun recordNajiWarp(context: Context) {
+        prefs(context).edit().putString(KEY_KIND, KIND_NAJIWARP).apply()
+    }
 
     private fun isMae(nodeId: String?) = nodeId == MAE_MARKER || nodeId == FLUX_MARKER || nodeId == FENIX_MARKER ||
         nodeId == AMNEZIA_MARKER || nodeId == OUTLINE_MARKER
@@ -131,6 +140,7 @@ object LastEngine {
                     Record.Xray(if (isMae(nodeId)) nodeId!! else uri, nodeId)
                 }
 
+            KIND_NAJIWARP -> Record.NajiWarp
             KIND_TUNNEL -> p.getString(KEY_TRANSPORT, null)
                 ?.takeIf { it.isNotBlank() }
                 ?.let { Record.Tunnel(it) }
