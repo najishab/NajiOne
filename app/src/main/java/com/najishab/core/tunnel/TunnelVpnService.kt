@@ -11,6 +11,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -6747,8 +6748,20 @@ class TunnelVpnService : VpnService(), TunnelEngine.CoreCallback, PsiphonTunnel.
             // content — the exact case the user is complaining about.
             .setVisibility(Notification.VISIBILITY_PUBLIC)
             .setOnlyAlertOnce(true)
-            .addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(R.string.tunnel_disconnect), disconnectPendingIntent)
-            .addAction(android.R.drawable.ic_menu_revert, getString(R.string.vpn_reconnect), reconnectPendingIntent)
+            .addAction(
+                Notification.Action.Builder(
+                    Icon.createWithResource(this, android.R.drawable.ic_menu_close_clear_cancel),
+                    getString(R.string.tunnel_disconnect),
+                    disconnectPendingIntent,
+                ).build()
+            )
+            .addAction(
+                Notification.Action.Builder(
+                    Icon.createWithResource(this, android.R.drawable.ic_menu_revert),
+                    getString(R.string.vpn_reconnect),
+                    reconnectPendingIntent,
+                ).build()
+            )
 
         // The session timer, ticked by the system rather than by us.
         //
