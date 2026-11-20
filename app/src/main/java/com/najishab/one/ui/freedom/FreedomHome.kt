@@ -122,7 +122,8 @@ fun FreedomHome(
     val engineName = WidgetMethods.app(activeId ?: link.last ?: session.shown)?.let { WidgetPainter.labelOf(it) }
     val engineCount = remember { NexusCatalog.methodGroups().sumOf { it.apps.size } }
     // The tick follows reality: the live/connecting method, else the favourite, else the last used.
-    val selectedId = if (conn.busy) activeId else (FreedomPrefs.preferredMethod ?: session.last)
+    val busyId = activeId ?: link.last
+    val selectedId = if (conn.busy) busyId else (FreedomPrefs.preferredMethod ?: session.last)
     val displayIds = remember(activeId, FreedomPrefs.recentMethods) {
         (listOfNotNull(activeId) + FreedomPrefs.recentMethods + WidgetMethods.IDS.filter { WidgetMethods.isMethod(it) })
             .distinct().take(3)
@@ -155,12 +156,32 @@ fun FreedomHome(
                 count = engineCount,
                 onAll = { onPage(FreedomPage.ENGINES) },
                 onPick = { id ->
-                    if (WidgetMethods.isMethod(id)) {
-                        FreedomPrefs.set(context, id)
-                        val nm = WidgetMethods.app(id)?.let { WidgetPainter.labelOf(it) } ?: id
-                        android.widget.Toast.makeText(context, tr("پروتکل انتخاب شد: $nm", "Protocol selected: $nm"), android.widget.Toast.LENGTH_SHORT).show()
-                    } else {
-                        WidgetMethods.app(id)?.let(onOpen)
+                    val app = WidgetMethods.app(id)
+                    if (app != null) {
+                        if (conn.busy) {
+                            // Connecting or connected: only the live method opens its own page.
+                            // Switching mid-session would drop the tunnel, so say so instead.
+                            if (id == busyId) {
+                                onOpen(app)
+                            } else {
+                                android.widget.Toast.makeText(
+                                    context,
+                                    tr("برای تغییر پروتکل، ابتدا اتصال را قطع کنید", "To change protocol, disconnect first"),
+                                    android.widget.Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                        } else if (id == selectedId) {
+                            // Second tap on the card already chosen: go to that protocol's page.
+                            onOpen(app)
+                        } else {
+                            FreedomPrefs.set(context, id)
+                            val nm = WidgetPainter.labelOf(app)
+                            android.widget.Toast.makeText(
+                                context,
+                                tr("پروتکل انتخاب شد: $nm", "Protocol selected: $nm"),
+                                android.widget.Toast.LENGTH_SHORT,
+                            ).show()
+                        }
                     }
                 },
             )

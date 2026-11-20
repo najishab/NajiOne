@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Lifecycle
 import com.najishab.one.store.tr
@@ -148,8 +149,13 @@ internal fun FreedomScene(state: LinkState, modifier: Modifier = Modifier) {
         val birdSize = (freedomCageWidth(maxWidth, maxHeight) * 0.46f).coerceIn(60.dp, 100.dp)
         val birdX = maxWidth * 0.5f - birdSize / 2f
         val birdY = maxHeight * 0.575f - birdSize / 2f
-        Canvas(Modifier.fillMaxSize()) {
-            drawScene(model, state, split, lockDrop, dawn, sun, warm, far, motion)
+        // Sky behind, cage in front: the bird sits BETWEEN them, so while it is inside, the
+        // bars cross it and it reads as caged. Once the cage has swung open (split past half)
+        // the bird moves in front, so nothing faint overlaps it while it soars.
+        // zIndex, not child order -- reordering children would rebuild the Lottie and its
+        // Animatables and the bird would jump.
+        Canvas(Modifier.fillMaxSize().zIndex(0f)) {
+            drawSky(model, dawn, sun, far, motion)
         }
         FreedomBird(
             state = state,
@@ -158,10 +164,16 @@ internal fun FreedomScene(state: LinkState, modifier: Modifier = Modifier) {
             areaW = maxWidth,
             areaH = maxHeight,
             size = birdSize,
-            modifier = Modifier.align(Alignment.TopStart).offset(x = birdX, y = birdY),
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .offset(x = birdX, y = birdY)
+                .zIndex(if (split < 0.5f) 1f else 3f),
         )
+        Canvas(Modifier.fillMaxSize().zIndex(2f)) {
+            drawCage(model, state, split, lockDrop, warm, motion)
+        }
         if (flash.value > 0.01f) {
-            Canvas(Modifier.fillMaxSize()) {
+            Canvas(Modifier.fillMaxSize().zIndex(4f)) {
                 val c = Offset(size.width * 0.5f, size.height * 0.58f)
                 val r = size.width * 0.78f
                 drawCircle(
@@ -272,11 +284,7 @@ private fun rattleAt(p: Float, a: Float, b: Float, c: Float, d: Float): Float = 
     else -> lerpF(c, d, (p - 0.75f) / 0.25f)
 }
 
-private fun DrawScope.drawScene(
-    m: CageModel, state: LinkState,
-    split: Float, lockDrop: Float, dawn: Float, sun: Float, warm: Float, far: Float,
-    mo: SceneMotion,
-) {
+private fun DrawScope.drawSky(m: CageModel, dawn: Float, sun: Float, far: Float, mo: SceneMotion) {
     val w = size.width
     val h = size.height
     // Sky: night under dawn, crossfaded.
@@ -329,7 +337,17 @@ private fun DrawScope.drawScene(
             center = Offset(w * mt.x, h * (1f - mt.fromBottom) - 17.dp.toPx() * rise),
         )
     }
-    /// The cage over the 220x260 viewBox, centred at (50%, 48%), sized to the scene.
+    }
+
+/** The cage alone, drawn OVER the bird so its bars read as being in front of it. */
+private fun DrawScope.drawCage(
+    m: CageModel, state: LinkState,
+    split: Float, lockDrop: Float, warm: Float,
+    mo: SceneMotion,
+) {
+    val w = size.width
+    val h = size.height
+    // The cage over the 220x260 viewBox, centred at (50%, 48%), sized to the scene.
     val cageW = freedomCageWidth(size.width.toDp(), size.height.toDp()).toPx()
     val s = cageW / 220f
     val cageH = 260f * s
