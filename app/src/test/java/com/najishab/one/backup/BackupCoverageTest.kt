@@ -75,6 +75,7 @@ class BackupCoverageTest {
         "combine_coach" to "OUT: one-time guide (a combine in progress)",
         "smart_verify" to "OUT: verification flow state",
         "split_tunneling" to "OUT: the old file vpn_routing_prefs replaced",
+        "najiwarp_preferences" to "METHOD m_najiwarp",
     )
 
     private val literal = Regex("getSharedPreferences\\(\\s*\"([^\"]+)\"")

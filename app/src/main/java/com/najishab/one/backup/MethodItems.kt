@@ -123,6 +123,13 @@ internal object MethodItems {
             tileId = "vpngate",
         ),
         SimpleItem(
+            "m_najiwarp", BackupKind.METHOD, "ناجی‌وارپ", "NajiWarp",
+            listOf(
+                PrefsSlice("najiwarp_preferences", whole = true),
+            ),
+            tileId = "najiwarp",
+        ),
+        SimpleItem(
             "m_v2ray", BackupKind.METHOD, "V2Ray", "V2Ray",
             listOf(
                 PrefsSlice(

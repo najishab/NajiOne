@@ -82,6 +82,17 @@ object StoreCatalog {
             aboutEn = "Built from the official OpenVPN source. Android builds compatible with NAJIONE's native interface are tested per ABI and installed through the signed channel. Fully close and reopen the app to use an update. Accounts and profiles are preserved.",
         ),
         StoreItem(
+            id = "najiwarp", kind = StoreKind.ENGINE,
+            titleFa = "هستهٔ ناجی‌وارپ", titleEn = "NajiWarp core",
+            subtitleFa = "موتور MASQUE/HTTP3 کلودفلر", subtitleEn = "Cloudflare MASQUE/HTTP3 engine",
+            developer = "NAJIONE · usque", repo = "najishab/NajiOne",
+            source = StoreSource.Channel,
+            icon = StoreIcon(Icons.Default.Waves, Orange),
+            engine = EngineSpec(libs = listOf("libusque_android.so"), mode = EngineSpec.Mode.JNI, shipped = "1.0.0"),
+            aboutFa = "موتور MASQUE روی HTTP/3 با پروفایل‌های TLS سازگار با کلودفلر. هسته همراه برنامه ارسال می‌شود.",
+            aboutEn = "A MASQUE engine over HTTP/3 with Cloudflare-compatible TLS profiles. The core ships with the app.",
+        ),
+        StoreItem(
             id = "aether", kind = StoreKind.ENGINE,
             titleFa = "هستهٔ ایتر (Aether)", titleEn = "Aether core",
             subtitleFa = "ایتر، اسکن وارپ و تقویت بازی", subtitleEn = "Aether, WARP scan and Game Boost",

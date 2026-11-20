@@ -4057,7 +4057,7 @@
     <string name="geph_share_log">Поделиться журналом</string>
     <string name="geph_log_footer">То, что сказал сам движок. Полезно, когда Geph не подключается на какой-то линии.</string>
     <string name="home_warp">WARP</string>
-    <string name="home_najiwarp">NajiWarp</string>
+    <string name="home_najiwarp">НаджиВарп</string>
     <string name="cfwarp">WARP</string>
     <string name="cfwarp_tagline">Собственный WARP от Cloudflare на отдельном движке — свой аккаунт, свой поиск точек входа, свои проверки.</string>
     <string name="cfwarp_advice">Не зависит от движка MASQUE, WireGuard и WARP-в-WARP: когда у них проблемы, этот всё равно пытается сам. Он считается подключённым только после того, как через него прошёл реальный запрос.</string>

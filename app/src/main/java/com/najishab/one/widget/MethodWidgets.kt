@@ -51,6 +51,7 @@ class MasqueWidget : MethodWidgetProvider("masque")
 class WireguardWidget : MethodWidgetProvider("wireguard")
 class WarpOnWarpWidget : MethodWidgetProvider("warp_on_warp")
 class WarpWidget : MethodWidgetProvider("warp")
+class NajiWarpWidget : MethodWidgetProvider("najiwarp")
 class PsiphonWidget : MethodWidgetProvider("psiphon")
 class TorWidget : MethodWidgetProvider("tor")
 class GephWidget : MethodWidgetProvider("geph")
@@ -78,6 +79,7 @@ object MethodWidgets {
         "wireguard" to WireguardWidget::class.java,
         "warp_on_warp" to WarpOnWarpWidget::class.java,
         "warp" to WarpWidget::class.java,
+        "najiwarp" to NajiWarpWidget::class.java,
         "psiphon" to PsiphonWidget::class.java,
         "tor" to TorWidget::class.java,
         "geph" to GephWidget::class.java,
