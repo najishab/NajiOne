@@ -533,39 +533,6 @@
     <string name="subgen_deploy_finish">Finished!</string>
     <string name="subgen_deploy_success">Deployment successful!\nBase Link: %1$s</string>
 
-    <!-- Game Booster -->
-    <string name="nav_game">Game</string>
-    <string name="settings_enable_game_tab">Enable Game Tab</string>
-    <string name="settings_enable_game_tab_desc">Reduce ping for mobile games</string>
-    <string name="game_title">Game Booster</string>
-    <string name="game_subtitle">Optimize your gaming connection</string>
-    <string name="game_select_game">Select a game</string>
-    <string name="game_select_region">Server Region</string>
-    <string name="game_region_me">Middle East</string>
-    <string name="game_region_eu">Europe</string>
-    <string name="game_region_as">Asia</string>
-    <string name="game_boost_btn">BOOST</string>
-    <string name="game_boost_stop">STOP</string>
-    <string name="game_testing">Testing…</string>
-    <string name="game_testing_progress">Testing node %1$d of %2$d</string>
-    <string name="game_boosted">Boosted!</string>
-    <string name="game_mode_auto">Auto</string>
-    <string name="game_mode_direct">Direct</string>
-    <string name="game_mode_tunnel">Tunnel</string>
-    <string name="game_mode_worker">Worker</string>
-    <string name="game_result_direct">Direct Connection</string>
-    <string name="game_result_tunnel">VPN Tunnel</string>
-    <string name="game_result_worker">Worker Relay</string>
-    <string name="game_result_best">Best Route</string>
-    <string name="game_ping_live">Live Ping</string>
-    <string name="game_ping_jitter">Jitter</string>
-    <string name="game_installed">Installed</string>
-    <string name="game_not_installed">Not Installed</string>
-    <string name="game_no_nodes">No nodes available. Add nodes in the Connect tab first.</string>
-    <string name="game_failed">Test failed. Check your internet connection.</string>
-    <string name="game_all_games">All Games</string>
-
-
     <!-- Home screen icon labels. Deliberately shorter than the drawer labels they replace,
          because an icon caption gets one line: "App Settings" becomes "Settings". -->
     <string name="home_v2ray">V2Ray</string>

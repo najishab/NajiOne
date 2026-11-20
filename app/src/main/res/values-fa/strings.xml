@@ -529,39 +529,6 @@
     <string name="subgen_deploy_finish">پایان!</string>
     <string name="subgen_deploy_success">استقرار با موفقیت انجام شد!\nلینک پایه: %1$s</string>
 
-    <!-- Game Booster -->
-    <string name="nav_game">گیم</string>
-    <string name="settings_enable_game_tab">فعال‌سازی تب گیم</string>
-    <string name="settings_enable_game_tab_desc">کاهش پینگ بازی‌های موبایل</string>
-    <string name="game_title">گیم بوستر</string>
-    <string name="game_subtitle">بهینه‌سازی اتصال برای بازی</string>
-    <string name="game_select_game">یک بازی انتخاب کنید</string>
-    <string name="game_select_region">ریجن سرور</string>
-    <string name="game_region_me">خاورمیانه</string>
-    <string name="game_region_eu">اروپا</string>
-    <string name="game_region_as">آسیا</string>
-    <string name="game_boost_btn">بوست</string>
-    <string name="game_boost_stop">توقف</string>
-    <string name="game_testing">در حال تست…</string>
-    <string name="game_testing_progress">تست نود %1$d از %2$d</string>
-    <string name="game_boosted">بوست شد!</string>
-    <string name="game_mode_auto">خودکار</string>
-    <string name="game_mode_direct">مستقیم</string>
-    <string name="game_mode_tunnel">تانل</string>
-    <string name="game_mode_worker">ورکر</string>
-    <string name="game_result_direct">اتصال مستقیم</string>
-    <string name="game_result_tunnel">تانل VPN</string>
-    <string name="game_result_worker">ریلی ورکر</string>
-    <string name="game_result_best">بهترین مسیر</string>
-    <string name="game_ping_live">پینگ لحظه‌ای</string>
-    <string name="game_ping_jitter">جیتر</string>
-    <string name="game_installed">نصب شده</string>
-    <string name="game_not_installed">نصب نشده</string>
-    <string name="game_no_nodes">نودی موجود نیست. ابتدا در تب اتصال نود اضافه کنید.</string>
-    <string name="game_failed">تست ناموفق. اتصال اینترنت را بررسی کنید.</string>
-    <string name="game_all_games">همه بازی‌ها</string>
-
-
     <!-- صفحه اصلی: برچسب آیکون‌ها. عمداً کوتاه‌تر از برچسب‌های منوی همبرگری‌اند
          چون زیر یک آیکون فقط یک خط جا می‌شود. -->
     <string name="home_v2ray">V2Ray</string>
