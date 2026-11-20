@@ -4959,4 +4959,9 @@
     <string name="default_subs_all_failed">به %1$s دسترسی پیدا نشد. اتصال اینترنت را بررسی کنید و دوباره تلاش کنید</string>
     <string name="default_subs_none_new">سرور معتبر جدیدی پیدا نشد (تکراری یا خراب بودند)</string>
     <string name="default_subs_error">هنگام دریافت سرورها خطایی رخ داد</string>
+    <string name="wireguard_game_trial">وایرگارد (تست بازی)</string>
+    <string name="your_in_game_name_optional">نام شما در بازی (اختیاری)</string>
+    <string name="ping_tuned_for_games">پینگ بهینه برای بازی‌ها</string>
+    <string name="studio_preset_gaming">بازی</string>
+    <string name="studio_preset_gaming_sub">همان شکلِ «پایداری»، چون هیچ‌چیزِ داخل لینک اتصال را سریع‌تر نمی‌کند. کاربردِ این یکی، فهرست نقطه‌های پایین است: به کم‌تأخیرترین نقطه‌تان وصلش کنید.</string>
 </resources>

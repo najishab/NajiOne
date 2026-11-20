@@ -47,6 +47,7 @@ internal fun lastMethodOf(context: Context): String? = runCatching {
         is LastEngine.Record.Tunnel -> r.transportId
         is LastEngine.Record.OpenVpn -> "openvpn"
         is LastEngine.Record.Xray -> ActiveEngines.homeOfNode(context, r.nodeId)
+        is LastEngine.Record.NajiWarp -> "najiwarp"
         null -> null
     }
 }.getOrNull()?.takeIf { WidgetMethods.isMethod(it) }

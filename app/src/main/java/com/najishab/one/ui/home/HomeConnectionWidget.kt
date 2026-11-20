@@ -217,6 +217,7 @@ private fun lastMethod(context: android.content.Context): String? = runCatching 
         is com.najishab.one.data.LastEngine.Record.Tunnel -> r.transportId
         is com.najishab.one.data.LastEngine.Record.OpenVpn -> "openvpn"
         is com.najishab.one.data.LastEngine.Record.Xray -> ActiveEngines.homeOfNode(context, r.nodeId)
+        is com.najishab.one.data.LastEngine.Record.NajiWarp -> "najiwarp"
         null -> null
     }
 }.getOrNull()?.takeIf { WidgetMethods.isMethod(it) }

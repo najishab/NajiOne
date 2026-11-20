@@ -4967,4 +4967,9 @@ After that it builds the combinations itself, measures every one with a real req
     <string name="default_subs_all_failed">Could not reach %1$s. Check your connection and try again</string>
     <string name="default_subs_none_new">No new valid servers found (they were duplicates or invalid)</string>
     <string name="default_subs_error">Something went wrong while fetching servers</string>
+    <string name="wireguard_game_trial">WireGuard (game trial)</string>
+    <string name="your_in_game_name_optional">Your in-game name (optional)</string>
+    <string name="ping_tuned_for_games">Ping tuned for games</string>
+    <string name="studio_preset_gaming">Game</string>
+    <string name="studio_preset_gaming_sub">The same shape as Steady, because nothing in a link makes a connection faster. What this one is for is the endpoint list below: point it at your lowest-latency endpoint.</string>
 </resources>

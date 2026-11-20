@@ -83,7 +83,6 @@ object ActiveEngines {
             com.najishab.one.openvpn.OpenVpnRuntime.connection.value.profileId,
             com.najishab.one.engines.najiwarp.NajiWarpEngine.phase.value is com.najishab.one.engines.najiwarp.NajiWarpPhase.CONNECTED,
         )
-        )
     }
 
     /**
