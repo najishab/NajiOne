@@ -17,9 +17,6 @@
             android:exported="true" android:permission="android.permission.DUMP" />
         <receiver android:name=".tilelab.TileLabReceiver"
             android:exported="true" android:permission="android.permission.DUMP" />
-        <receiver
-            android:name=".gblab.GameLabReceiver"
-            android:exported="true" />
 
         <!-- A method still being built (HomeDestinations.IN_PROGRESS) declares its widget here, only
              where its tile is, so a release lists no widget for a method it does not have. None now. -->

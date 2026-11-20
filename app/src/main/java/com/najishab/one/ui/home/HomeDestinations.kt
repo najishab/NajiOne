@@ -198,7 +198,6 @@ object HomeDestinations {
         // the grid. Teal is free in practice -- the only other destination holding it is Cloud,
         // which draws Cloudflare's own artwork through `imageRes` and never renders this tint or
         // a cloud glyph at all.
-        HomeApp("game",              R.string.home_game,          Icons.Default.SportsEsports, Green, glyphRes = R.drawable.ic_glyph_pad),
         HomeApp("vpngate",           R.string.home_gateway,       Icons.Default.Public,        Indigo, imageRes = R.drawable.ic_app_gateway),
         HomeApp("openvpn", R.string.home_openvpn, Icons.Default.VpnKey, Orange, imageRes = R.drawable.ic_app_openvpn),
         HomeApp("fixed_ip",          R.string.home_fixed_ip,      Icons.Default.LocationOn,    Pink, glyphRes = R.drawable.ic_glyph_pin),
@@ -282,7 +281,7 @@ object HomeDestinations {
         "masque", "wireguard", "warp_on_warp", "warp", "najiwarp",
         "psiphon", "tor", "geph", "lantern", "urnetwork", "mae", "flux", "fenix",
         "amnezia", "outline", "npv",
-        "game", "vpngate", "openvpn", "configstudio", "widgetstudio",
+        "vpngate", "openvpn", "configstudio", "widgetstudio",
         "store", "iran", "fronting",
         "@tools", "emergency_2", "emergency_3",
     )
@@ -306,7 +305,6 @@ object HomeDestinations {
         "amnezia", "outline", "npv", "vpngate", "openvpn", "nodes" -> Category.CONNECT
         "iran", "fronting", "sublink", "configstudio", "cloud" -> Category.CONFIGS
         "fixed_ip", "lan", "usage", "tutorial", "store", "scanner", "settings", "scout", "widgetstudio" -> Category.TOOLS
-        "game" -> Category.GAMES
         "emergency_2", "emergency_3" -> Category.EMERGENCY
         else -> null
     }

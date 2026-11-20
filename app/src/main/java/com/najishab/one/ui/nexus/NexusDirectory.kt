@@ -87,7 +87,7 @@ object NexusCatalog {
     )
     private val PLATFORMS = listOf("fenix", "mae")
     private val SERVICES = listOf(
-        "game", "iran", "fronting", "emergency_2", "emergency_3", "nodes"
+        "iran", "fronting", "emergency_2", "emergency_3", "nodes"
     )
 
     private val all: List<HomeApp>

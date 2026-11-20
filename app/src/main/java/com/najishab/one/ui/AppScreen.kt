@@ -51,7 +51,7 @@ import com.najishab.one.utils.S
 private val FEATURE_BAR_HEIGHT = 56.dp
 
 private val SELF_HEADED = setOf(
-    "settings", "vpn_settings", "usage", "tutorial", "nodes", "cloud", "scanner", "game", "sublink", "fixed_ip", "vpngate", "lan",
+    "settings", "vpn_settings", "usage", "tutorial", "nodes", "cloud", "scanner", "sublink", "fixed_ip", "vpngate", "lan",
     "configstudio", "store", "openvpn", "mae", "flux", "fenix", "cfdoctor", "amnezia", "outline", "scout",
     "npv", "widgetstudio", "najiwarp",
     // The five transports. Each draws an iOS navigation bar of its own, and pushes pages under
@@ -62,19 +62,6 @@ private val SELF_HEADED = setOf(
 @Composable
 fun AppScreen() {
     val context = androidx.compose.ui.platform.LocalContext.current
-    // After an engine-conflict restart the game boost left a "pending_boost_mode" flag -- land the
-    // user straight back on the Game tab so they can retap Start on a clean process.
-    val hasPendingBoost = remember {
-        context.getSharedPreferences("game_booster_prefs", android.content.Context.MODE_PRIVATE)
-            .getString("pending_boost_mode", null) != null
-    }
-    // Tapping the game booster's notification opens the app on the Game tab too.
-    val openedFromBooster = remember {
-        generateSequence(context) { (it as? android.content.ContextWrapper)?.baseContext }
-            .filterIsInstance<android.app.Activity>().firstOrNull()?.intent
-            ?.getBooleanExtra(com.najishab.one.engines.game.booster.session.GameBoostService.EXTRA_OPEN_BOOSTER, false) == true
-    }
-
     // The landing screen is the icon grid. Everything else in the app is reached from it: the
     // four dock apps, the fourteen grid apps, and nothing hidden behind a drawer any more.
     val homeTab = "home"
@@ -84,7 +71,7 @@ fun AppScreen() {
             .filterIsInstance<android.app.Activity>().firstOrNull()?.intent
             ?.getStringExtra(com.najishab.one.ui.amnezia.AmzImportActivity.EXTRA_OPEN_TAB)
     }
-    var activeTab by remember { mutableStateOf(if (hasPendingBoost || openedFromBooster) "game" else openedForTab ?: homeTab) }
+        var activeTab by remember { mutableStateOf(openedForTab ?: homeTab) }
     // Real back stack (was a single `previousTab`, which broke nested navigation: opening a screen
     // FROM another overlay clobbered the one shared "previous" value, so the parent's back button
     // went dead). openTab() pushes; goBack() pops; switchTab() resets the stack.
@@ -93,7 +80,7 @@ fun AppScreen() {
     // Game tab has to land on the icon grid, and `homeTab` is also what decides when back offers
     // to exit the app -- pointing it at a feature screen would make the exit prompt unreachable.
     val navStack = remember {
-        mutableStateListOf<String>().apply { if (hasPendingBoost || openedFromBooster || openedForTab != null) add(homeTab) }
+        mutableStateListOf<String>().apply { if (openedForTab != null) add(homeTab) }
     }
     // Breadcrumbs: a native abort produces no Java stack, so the last screen the user reached
     // is often the only clue about where it happened.

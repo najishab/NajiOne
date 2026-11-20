@@ -127,7 +127,6 @@ internal val TileAliases: Map<String, List<String>> = mapOf(
     "outline" to listOf("اوتلاین", "Shadowsocks"),
     "urnetwork" to listOf("یو آر نتورک", "یوآر", "UR", "ur.io", "BringYour"),
     "npv" to listOf("NPV Tunnel", "ان پی وی", "NapsternetV", "ناپسترنت", "npvt", "npvs"),
-    "game" to listOf("بازی", "پینگ", "Ping"),
     "vpngate" to listOf("VPN Gate", "VPNGate"),
     "openvpn" to listOf("اوپن وی پی ان", "OVPN"),
     "fixed_ip" to listOf("Static IP"),

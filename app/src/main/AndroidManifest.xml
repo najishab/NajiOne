@@ -34,9 +34,6 @@
         android:usesPermissionFlags="neverForLocation"
         tools:targetApi="tiramisu" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- The game booster's optional floating ping over the game. Granted by the player from the
-         booster's Advanced page ("display over other apps"); nothing is drawn without it. -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- TV Support Features -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
@@ -322,23 +319,6 @@
         </service>
 
         <!--
-            GameBoostService: measures the routes to a game's servers, applies the best one and
-            keeps measuring it while the user plays. The user leaves for the game the moment the
-            boost is done, and on the direct route there is no VPN service to keep the process
-            alive, so the live reading needs a foreground service of its own.
-        -->
-        <service
-            android:name=".engines.game.booster.session.GameBoostService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse"
-            tools:targetApi="34">
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Measures and monitors the network route to a game server while the user plays"
-                tools:targetApi="34" />
-        </service>
-
-        <!--
             AetherScanService: foreground service that drives the Aether Rust binary
             (assets/aether/<abi>/aether), produces a SOCKS5 listener on 127.0.0.1:20810 and
             exposes state through androidx StateFlow's that AetherScreen renders live.
@@ -437,20 +417,6 @@
             android:exported="true"
             android:icon="@drawable/ic_vpn"
             android:label="@string/tile_label_lan"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
-
-        <!-- A THIRD tile, on the LAN tile's reasoning: a different job, not another way to start
-             a tunnel. It boosts the game last boosted (or stops the boost), and opens the booster
-             when the boost needs a screen (VPN permission, another connection on). -->
-        <service
-            android:name=".ui.game.GameBoostTileService"
-            android:exported="true"
-            android:icon="@drawable/ic_notification"
-            android:label="@string/gb_tile_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
