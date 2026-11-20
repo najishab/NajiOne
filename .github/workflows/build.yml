@@ -7,12 +7,14 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # ۱. دریافت کدها همراه با فایل‌های حجیم Git LFS
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
@@ -24,7 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # ۲. تنظیم گرادل و فعال کردن Build Scan
       - name: Setup Gradle 8.13
         uses: gradle/actions/setup-gradle@v3
         with:
@@ -51,26 +52,18 @@ jobs:
           fi
           chmod +x gradlew
 
-      # ۳. بررسی فایل‌های so و aar موجود روی سرور قبل از بیلد
-      - name: Check native libs in repo
-        run: |
-          find . -type f \( -name "*.so" -o -name "*.aar" \) -exec ls -lh {} + || true
-
-      # ۴. اجرای بیلد با اسکن کامل
+      # بیلد یک فایل تکی v8 (اگر نسخه 200 مگی جامع خواستید -PnajiQuick را حذف کنید و پایین *universal*.apk بگذارید)
       - name: Build with Gradle
-        run: ./gradlew :app:assembleDebug --scan --stacktrace
+        run: ./gradlew :app:assembleDebug -PnajiQuick --scan --stacktrace
 
-      # ۵. بررسی فایل‌های so داخل APK خروجی و حجم دقیق فایل‌ها
-      - name: Inspect built APKs
+      # انتشار مستقیم فایل APK بدون Zip در صفحه Releases گیت‌هاب
+      - name: Publish Direct APK to Releases
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          find app/build/outputs/apk -name "*.apk" | while read -r f; do
-            echo "=== $f ==="
-            ls -lh "$f"
-            unzip -l "$f" | grep "\.so" || echo "No .so files found"
-          done
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: NajiOne-Debug-APK
-          path: app/build/outputs/apk/**/*.apk
+          gh release delete latest-debug --cleanup-tag -y || true
+          gh release create latest-debug app/build/outputs/apk/debug/*.apk \
+            --title "Latest Debug APK (#${{ github.run_number }})" \
+            --notes "Direct APK download (no ZIP)" \
+            --prerelease
