@@ -177,8 +177,4 @@ object ActiveEngines {
             else -> "nodes"
         }
     }
-
-    private fun gameModeActive(context: Context): Boolean =
-        context.getSharedPreferences("game_booster_prefs", Context.MODE_PRIVATE)
-            .getBoolean("game_mode_active", false)
 }
