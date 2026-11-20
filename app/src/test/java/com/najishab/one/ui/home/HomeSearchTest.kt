@@ -73,7 +73,6 @@ class HomeSearchTest {
         assertEquals("cloud", found("کلادفلر").first())
         assertEquals("wireguard", found("WG").first())
         assertEquals("fixed_ip", found("آی‌پی ثابت").first())
-        assertEquals("game", found("بازی").first())
         // As an Arabic keyboard types it, and without the zero-width non-joiner.
         assertEquals("psiphon", found("سايفون").first())
         assertEquals("tutorial", found("آموزشها").first())

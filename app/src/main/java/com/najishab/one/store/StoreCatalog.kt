@@ -592,15 +592,6 @@ object StoreCatalog {
             icon = StoreIcon(Icons.Default.Shield, Green),
             data = DataSpec("sanction_domains.json", DataSpec.Target.OVERLAY, json = true),
         ),
-        StoreItem(
-            id = "game-catalog", kind = StoreKind.DATA,
-            titleFa = "فهرست بازی‌ها", titleEn = "Game catalogue",
-            subtitleFa = "تقویت بازی", subtitleEn = "Game Boost",
-            developer = "NAJI ONE", repo = "najishab/NajiOne",
-            source = StoreSource.Channel,
-            icon = StoreIcon(Icons.Default.SportsEsports, Green, tint2 = Teal),
-            data = DataSpec("game_catalog.json", DataSpec.Target.OVERLAY, json = true),
-        ),
     )
 
     val ALL: List<StoreItem> = listOf(APP) + ENGINES + WORKERS + DATA

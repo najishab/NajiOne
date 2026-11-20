@@ -823,33 +823,6 @@ fun getHelpArticlesFa(): List<HelpArticle> {
             """.trimIndent()
         ),
         HelpArticle(
-            id = "dedicated_dns",
-            title = S(R.string.dedicated_dns_for_lower_game_ping),
-            icon = Icons.Default.Dns,
-            content = """
-                **DNS اختصاصی چیست؟**
-                یک سرور DNS کاملاً شخصی که روی حساب Cloudflare **خودتان** (نه حساب مشترک) مستقر می‌شود و فقط مال شماست. کاملاً رایگان و بدون نیاز به کارت بانکی جهانی.
-
-                **چرا به حساب Cloudflare نیاز دارد؟**
-                این DNS باید روی زیرساخت شخصی خودتان اجرا شود تا هیچ‌کس دیگری از آن استفاده نکند و ترافیک/محدودیت آن فقط برای شما باشد » دقیقاً مثل پنل‌های EDG یا نهان که قبلاً مستقر کرده‌اید. برای همین ابتدا باید یک حساب Cloudflare را در **تب کلاد** وصل کنید.
-
-                **تفاوتش با DNS معمولی چیست؟**
-                یک DNS معمولی (مثل 1.1.1.1) فقط آدرس سرور بازی را برمی‌گرداند. اما این DNS اختصاصی با تکنیکی به نام **ECS (EDNS Client Subnet)** به سرور بالادست می‌گوید «انگار از منطقه X پرسیده می‌شود» تا نزدیک‌ترین و کم‌تاخیرترین سرور بازیِ آن منطقه را تحویل بگیرد. این یعنی بسته‌های بازی مسیر کوتاه‌تری طی می‌کنند و پینگ پایین می‌آید.
-
-                **حالت خودکار (Auto):**
-                برنامه چند منطقه را همزمان امتحان می‌کند، به سرورهای برگشتی واقعاً پینگ می‌زند، بهترین منطقه را انتخاب می‌کند و برای **هر بازی به‌صورت جداگانه** به خاطر می‌سپارد.
-
-                **حالت دستی (Manual):**
-                خودتان یک منطقه ثابت (مثلاً امارات یا ترکیه) را همیشه انتخاب می‌کنید.
-
-                **چرا امارات پیش‌فرض است؟**
-                معمولاً نزدیک‌ترین و کم‌تاخیرترین منطقه به کاربران ایرانی برای اکثر سرورهای بازی است؛ اگر مسیر بهتری پیدا نشود، امارات انتخاب می‌شود.
-
-                **نکته مهم:**
-                این قابلیت روی **همه‌ی حالت‌های بوست** (مستقیم، تونل، وارپ و هیبرید) و **همه‌ی بازی‌های موجود در لیست** به‌صورت خودکار اعمال می‌شود و نیازی به تنظیم جداگانه برای هر بازی ندارید. کافی است یک‌بار روی دکمه «فعال‌سازی DNS اختصاصی» در تب گیمینگ بزنید.
-            """.trimIndent()
-        ),
-        HelpArticle(
             id = "domain_fronting",
             title = S(R.string.domain_fronting_no_server_installing_and_removing),
             icon = Icons.Default.Shield,
@@ -1287,33 +1260,6 @@ fun getHelpArticlesEn(): List<HelpArticle> {
                 **Auto-Sync and Stats:**
                 - Whenever the configs in that group change (e.g. you run a new scan), the sub link will be updated **automatically in the background**. Your friends just need to tap Update in V2rayNG to get the new configs.
                 - By tapping the **"Stats (📊)"** button next to each link, you can see how many times that link has been updated and downloaded by others!
-            """.trimIndent()
-        ),
-        HelpArticle(
-            id = "dedicated_dns",
-            title = "Dedicated DNS for Lower Game Ping",
-            icon = Icons.Default.Dns,
-            content = """
-                **What is Dedicated DNS?**
-                A fully private DNS resolver deployed on **your own** Cloudflare account (not a shared one), dedicated to you alone. Completely free, no international bank card required.
-
-                **Why does it need a Cloudflare account?**
-                It must run on your own infrastructure so no one else shares it and its traffic/quota is yours only » exactly like the EDG or Nahan panels you may have deployed before. So first connect a Cloudflare account in the **Cloud tab**.
-
-                **How is it different from a normal DNS?**
-                A normal DNS (like 1.1.1.1) just returns the game server address. This dedicated DNS uses a technique called **ECS (EDNS Client Subnet)** to tell the upstream resolver "answer as if I'm in region X," so it returns the closest, lowest-latency game server for that region. That means game packets travel a shorter path and ping drops.
-
-                **Auto mode:**
-                The app races several regions in parallel, actually pings the returned servers, picks the fastest region, and remembers it **separately for each game**.
-
-                **Manual mode:**
-                You pick one fixed region yourself (e.g. UAE or Turkey) and it's always used.
-
-                **Why is UAE the default?**
-                It's usually the closest, lowest-latency region to Iran-based players for most game servers; if no better route is found, UAE is chosen.
-
-                **Important:**
-                This applies automatically across **all boost modes** (Direct, Tunnel, WARP, Hybrid) and **every game in the list**, with no per-game setup. Just tap "Deploy Dedicated DNS" once in the Gaming tab.
             """.trimIndent()
         ),
         HelpArticle(

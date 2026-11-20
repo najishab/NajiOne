@@ -47,8 +47,6 @@ class BackupCoverageTest {
         "geph" to "METHOD m_geph",
         "amnezia_ui" to "METHOD m_amnezia",
         "outline_ui" to "METHOD m_outline",
-        "game_booster_prefs" to "METHOD m_game; session state left out",
-        "gb_crowd" to "METHOD m_game (share); crowd id left out",
         "vpngate_prefs" to "METHOD m_vpngate",
         "urnetwork" to "METHOD m_urnetwork (blocker, location, MAE switch); the usage and country-list caches left out",
         // ── left out ──

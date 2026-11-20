@@ -115,19 +115,6 @@ internal object MethodItems {
             slices = listOf(PrefsSlice("outline_ui", whole = true)),
         ),
         SimpleItem(
-            "m_game", BackupKind.METHOD, "بوستر بازی", "Game booster",
-            listOf(
-                PrefsSlice(
-                    "game_booster_prefs",
-                    keys = setOf("dedicated_dns_enabled", "dedicated_dns_mode", "dedicated_dns_manual_region", "aether_protocol", "aether_scan", "gb_last_game"),
-                ),
-                PrefsSlice("gb_crowd", keys = setOf("share")),
-                PrefsSlice(DEFAULT_PREFS, keys = setOf("game_route_profile", "game_split_routes", "game_dns_ip")),
-            ),
-            files = listOf("files/game_booster/profiles.json"),
-            tileId = "game",
-        ),
-        SimpleItem(
             "m_vpngate", BackupKind.METHOD, "VPN Gate", "VPN Gate",
             listOf(
                 PrefsSlice("vpngate_prefs", keys = setOf("udp_acceleration", "kept_hosts", "hidden_hosts")),
