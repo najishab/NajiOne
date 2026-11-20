@@ -392,13 +392,6 @@ fun AppScreen() {
                             }
                         }
                     }
-                    if (visitedTabs.contains("game")) {
-                        Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "game") 0.dp else 10000.dp)) {
-                            CompositionLocalProvider(LocalTabVisible provides (activeTab == "game")) {
-                                com.najishab.one.ui.game.GameBoosterHost(onBack = { goBack() }, onNavigateToCloud = { switchTab("cloud") })
-                            }
-                        }
-                    }
                 if (visitedTabs.contains("settings")) {
                     Box(modifier = Modifier.fillMaxSize().offset(x = if (activeTab == "settings") 0.dp else 10000.dp)) {
                         val skin = SkinPrefs.skin

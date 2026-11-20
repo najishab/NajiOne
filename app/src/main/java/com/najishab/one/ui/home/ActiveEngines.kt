@@ -171,13 +171,8 @@ object ActiveEngines {
             id == com.najishab.one.engines.outline.OutlineEngine.NODE_ID -> "outline"
             id == com.najishab.one.engines.npv.NpvEngine.NODE_ID -> "npv"
             id == com.najishab.one.engines.amnezia.AmzEngine.NODE_ID -> "amnezia"
-            // The booster's own ids, plus the two DNS-only modes it can run without a tunnel.
-            id.startsWith("game_") || id.startsWith("dedicated_dns") ||
-                id.startsWith("direct_dns") -> "game"
+            id == "game_uae_trial" -> "wireguard"
             id.startsWith("vpngate_") -> "vpngate"
-            // A user's own node boosted for a game keeps ITS id, so the booster's own flag is the
-            // only thing that can tell that case from an ordinary connect.
-            gameModeActive(context) -> "game"
             id == "aether" -> null
             else -> "nodes"
         }
