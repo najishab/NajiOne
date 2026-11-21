@@ -5029,4 +5029,32 @@
     <string name="nw_wiz_team_placeholder">نام تیم (مثلا my-team)</string>
     <string name="nw_wiz_open_zt_login">باز کردن صفحه ورود سازمان در مرورگر</string>
     <string name="nw_wiz_callback_placeholder">لینک com.cloudflare.warp://... را اینجا Paste کنید</string>
+        <!-- NajiWarp notification -->
+    <string name="nw_notif_preparing">در حال آماده‌سازی NajiWarp...</string>
+    <string name="nw_notif_connecting_h2">در حال اتصال با HTTP/2...</string>
+    <string name="nw_notif_connecting_h3">در حال اتصال با HTTP/3...</string>
+    <string name="nw_notif_connected">متصل (%1$s)</string>
+    <string name="nw_notif_disconnect">قطع اتصال</string>
+    <string name="nw_quota_free">رایگان</string>
+        <!-- NajiWarp options -->
+    <string name="nw_account_free">رایگان (Cloudflare WARP)</string>
+    <string name="nw_account_plus">وارپ پلاس (WARP+ License)</string>
+    <string name="nw_account_zt">کلودفلر سازمانی (Zero Trust Team)</string>
+    <string name="nw_dns_standard">استاندارد (1.1.1.1)</string>
+    <string name="nw_dns_malware">محافظت بدافزار (1.1.1.2)</string>
+    <string name="nw_dns_family">محافظت خانواده (1.1.1.3)</string>
+    <string name="nw_dns_custom">سفارشی (DNS over HTTPS)</string>
+    <string name="nw_routing_global">تمام ترافیک دستگاه (VPN Full Tunnel)</string>
+    <string name="nw_routing_proxy">فقط پروکسی محلی (SOCKS5 / HTTP)</string>
+    <string name="nw_transport_auto">خودکار (HTTP/3 + Fallback HTTP/2)</string>
+    <string name="nw_transport_h3">فقط HTTP/3 (QUIC)</string>
+    <string name="nw_transport_h2">فقط HTTP/2 (TCP/TLS)</string>
+    <string name="nw_tls_chrome">شبیه‌سازی Chrome 155 (پیش‌فرض)</string>
+    <string name="nw_tls_default">پروفایل استاندارد (Default TLS)</string>
+    <string name="nw_cc_cubic">CUBIC (پیش‌فرض استاندارد)</string>
+    <string name="nw_cc_bbr">BBRv2 (بهینه‌شده)</string>
+    <string name="nw_cc_bbr3">BBRv3 (سریع)</string>
+    <string name="nw_cc_reno">RENO (کلاسیک)</string>
+    <string name="nw_endpoint_auto">انتخاب خودکار بهترین اندپوینت کلودفلر</string>
+    <string name="nw_endpoint_custom">آی‌پی و پورت دستی (Custom Endpoint)</string>
 </resources>

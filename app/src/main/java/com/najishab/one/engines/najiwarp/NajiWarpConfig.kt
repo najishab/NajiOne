@@ -1,5 +1,8 @@
 package com.najishab.one.engines.najiwarp
 
+import androidx.annotation.StringRes
+import com.najishab.one.R
+
 data class NajiWarpConfig(
     val accountType: AccountType = AccountType.CONSUMER_FREE,
     val warpLicenseKey: String = "",
@@ -19,45 +22,45 @@ data class NajiWarpConfig(
     val httpPort: Int = 20891
 )
 
-enum class AccountType(val title: String) {
-    CONSUMER_FREE("رایگان (Cloudflare WARP)"),
-    WARP_PLUS("وارپ پلاس (WARP+ License)"),
-    ZERO_TRUST("کلودفلر سازمانی (Zero Trust Team)")
+enum class AccountType(@StringRes val titleRes: Int) {
+    CONSUMER_FREE(R.string.nw_account_free),
+    WARP_PLUS(R.string.nw_account_plus),
+    ZERO_TRUST(R.string.nw_account_zt)
 }
 
-enum class DnsPolicy(val title: String, val ipv4: String, val ipv6: String) {
-    STANDARD("استاندارد (1.1.1.1)", "1.1.1.1", "2606:4700:4700::1111"),
-    MALWARE_BLOCKING("محافظت بدافزار (1.1.1.2)", "1.1.1.2", "2606:4700:4700::1112"),
-    FAMILY_PROTECTION("محافظت خانواده (1.1.1.3)", "1.1.1.3", "2606:4700:4700::1113"),
-    CUSTOM_DOH("سفارشی (DNS over HTTPS)", "1.1.1.1", "2606:4700:4700::1111")
+enum class DnsPolicy(@StringRes val titleRes: Int, val ipv4: String, val ipv6: String) {
+    STANDARD(R.string.nw_dns_standard, "1.1.1.1", "2606:4700:4700::1111"),
+    MALWARE_BLOCKING(R.string.nw_dns_malware, "1.1.1.2", "2606:4700:4700::1112"),
+    FAMILY_PROTECTION(R.string.nw_dns_family, "1.1.1.3", "2606:4700:4700::1113"),
+    CUSTOM_DOH(R.string.nw_dns_custom, "1.1.1.1", "2606:4700:4700::1111")
 }
 
-enum class RoutingMode(val title: String) {
-    GLOBAL("تمام ترافیک دستگاه (VPN Full Tunnel)"),
-    PROXY_ONLY("فقط پروکسی محلی (SOCKS5 / HTTP)")
+enum class RoutingMode(@StringRes val titleRes: Int) {
+    GLOBAL(R.string.nw_routing_global),
+    PROXY_ONLY(R.string.nw_routing_proxy)
 }
 
-enum class TransportMode(val wireValue: String, val title: String) {
-    AUTOMATIC("automatic", "خودکار (HTTP/3 + Fallback HTTP/2)"),
-    HTTP3("http3", "فقط HTTP/3 (QUIC)"),
-    HTTP2("http2", "فقط HTTP/2 (TCP/TLS)")
+enum class TransportMode(val wireValue: String, @StringRes val titleRes: Int) {
+    AUTOMATIC("automatic", R.string.nw_transport_auto),
+    HTTP3("http3", R.string.nw_transport_h3),
+    HTTP2("http2", R.string.nw_transport_h2)
 }
 
-enum class MasqueProfile(val wireValue: String, val title: String) {
-    CHROME155("chrome155", "شبیه‌سازی Chrome 155 (پیش‌فرض)"),
-    DEFAULT("default", "پروفایل استاندارد (Default TLS)")
+enum class MasqueProfile(val wireValue: String, @StringRes val titleRes: Int) {
+    CHROME155("chrome155", R.string.nw_tls_chrome),
+    DEFAULT("default", R.string.nw_tls_default)
 }
 
-enum class BbrAlgorithm(val wireValue: String, val title: String) {
-    CUBIC("cubic", "CUBIC (پیش‌فرض استاندارد)"),
-    BBR("bbr", "BBRv2 (بهینه‌شده)"),
-    BBR3("bbr3", "BBRv3 (سریع)"),
-    RENO("reno", "RENO (کلاسیک)")
+enum class BbrAlgorithm(val wireValue: String, @StringRes val titleRes: Int) {
+    CUBIC("cubic", R.string.nw_cc_cubic),
+    BBR("bbr", R.string.nw_cc_bbr),
+    BBR3("bbr3", R.string.nw_cc_bbr3),
+    RENO("reno", R.string.nw_cc_reno)
 }
 
-enum class EndpointMode(val wireValue: String, val title: String) {
-    AUTOMATIC("automatic", "انتخاب خودکار بهترین اندپوینت کلودفلر"),
-    CUSTOM("custom", "آی‌پی و پورت دستی (Custom Endpoint)")
+enum class EndpointMode(val wireValue: String, @StringRes val titleRes: Int) {
+    AUTOMATIC("automatic", R.string.nw_endpoint_auto),
+    CUSTOM("custom", R.string.nw_endpoint_custom)
 }
 
 sealed class NajiWarpPhase {

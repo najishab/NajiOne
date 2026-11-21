@@ -4889,4 +4889,32 @@
     <string name="nw_wiz_team_placeholder">Имя команды (например, my-team)</string>
     <string name="nw_wiz_open_zt_login">Открыть страницу входа организации в браузере</string>
     <string name="nw_wiz_callback_placeholder">Вставьте сюда ссылку com.cloudflare.warp://…</string>
+        <!-- NajiWarp notification -->
+    <string name="nw_notif_preparing">Подготовка NajiWarp…</string>
+    <string name="nw_notif_connecting_h2">Подключение по HTTP/2…</string>
+    <string name="nw_notif_connecting_h3">Подключение по HTTP/3…</string>
+    <string name="nw_notif_connected">Подключено (%1$s)</string>
+    <string name="nw_notif_disconnect">Отключить</string>
+    <string name="nw_quota_free">Бесплатный</string>
+        <!-- NajiWarp options -->
+    <string name="nw_account_free">Бесплатный (Cloudflare WARP)</string>
+    <string name="nw_account_plus">WARP+ (лицензионный ключ)</string>
+    <string name="nw_account_zt">Cloudflare Zero Trust (команда)</string>
+    <string name="nw_dns_standard">Стандартный (1.1.1.1)</string>
+    <string name="nw_dns_malware">Защита от вредоносных программ (1.1.1.2)</string>
+    <string name="nw_dns_family">Семейная защита (1.1.1.3)</string>
+    <string name="nw_dns_custom">Пользовательский (DNS over HTTPS)</string>
+    <string name="nw_routing_global">Весь трафик устройства (VPN, полный туннель)</string>
+    <string name="nw_routing_proxy">Только локальный прокси (SOCKS5 / HTTP)</string>
+    <string name="nw_transport_auto">Автоматически (HTTP/3 + запасной HTTP/2)</string>
+    <string name="nw_transport_h3">Только HTTP/3 (QUIC)</string>
+    <string name="nw_transport_h2">Только HTTP/2 (TCP/TLS)</string>
+    <string name="nw_tls_chrome">Имитация Chrome 155 (по умолчанию)</string>
+    <string name="nw_tls_default">Стандартный профиль (обычный TLS)</string>
+    <string name="nw_cc_cubic">CUBIC (стандартный по умолчанию)</string>
+    <string name="nw_cc_bbr">BBRv2 (оптимизированный)</string>
+    <string name="nw_cc_bbr3">BBRv3 (быстрый)</string>
+    <string name="nw_cc_reno">RENO (классический)</string>
+    <string name="nw_endpoint_auto">Автоматический выбор лучшей точки Cloudflare</string>
+    <string name="nw_endpoint_custom">Ручные IP и порт (своя точка)</string>
 </resources>

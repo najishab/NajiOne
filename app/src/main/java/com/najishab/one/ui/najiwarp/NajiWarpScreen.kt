@@ -126,42 +126,42 @@ fun NajiWarpScreen(onBack: () -> Unit) {
         when (subPage) {
             "transport" -> IosPickerScreen(
                 title = S(R.string.nw_transport_protocol),
-                options = TransportMode.entries.map { IosOption(it.name, it.title) },
+                options = TransportMode.entries.map { IosOption(it.name, S(it.titleRes)) },
                 selectedKey = config.transportMode.name,
                 onSelect = { k -> updateConfig(config.copy(transportMode = TransportMode.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "fingerprint" -> IosPickerScreen(
                 title = S(R.string.nw_tls_profile),
-                options = MasqueProfile.entries.map { IosOption(it.name, it.title) },
+                options = MasqueProfile.entries.map { IosOption(it.name, S(it.titleRes)) },
                 selectedKey = config.masqueProfile.name,
                 onSelect = { k -> updateConfig(config.copy(masqueProfile = MasqueProfile.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "bbr" -> IosPickerScreen(
                 title = S(R.string.nw_http3_cc),
-                options = BbrAlgorithm.entries.map { IosOption(it.name, it.title) },
+                options = BbrAlgorithm.entries.map { IosOption(it.name, S(it.titleRes)) },
                 selectedKey = config.bbrAlgorithm.name,
                 onSelect = { k -> updateConfig(config.copy(bbrAlgorithm = BbrAlgorithm.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "dns" -> IosPickerScreen(
                 title = S(R.string.nw_dns_policy),
-                options = DnsPolicy.entries.map { IosOption(it.name, it.title) },
+                options = DnsPolicy.entries.map { IosOption(it.name, S(it.titleRes)) },
                 selectedKey = config.dnsPolicy.name,
                 onSelect = { k -> updateConfig(config.copy(dnsPolicy = DnsPolicy.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "routing" -> IosPickerScreen(
                 title = S(R.string.nw_routing_mode),
-                options = RoutingMode.entries.map { IosOption(it.name, it.title) },
+                options = RoutingMode.entries.map { IosOption(it.name, S(it.titleRes)) },
                 selectedKey = config.routingMode.name,
                 onSelect = { k -> updateConfig(config.copy(routingMode = RoutingMode.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "endpoint_mode" -> IosPickerScreen(
                 title = S(R.string.nw_endpoint_selection),
-                options = EndpointMode.entries.map { IosOption(it.name, it.title) },
+                options = EndpointMode.entries.map { IosOption(it.name, S(it.titleRes)) },
                 selectedKey = config.endpointMode.name,
                 onSelect = { k -> updateConfig(config.copy(endpointMode = EndpointMode.valueOf(k))) },
                 onBack = { subPage = null }
@@ -409,7 +409,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
             SettingsGroup {
                 SettingsRow(
                     title = S(R.string.nw_reset_account),
-                    subtitle = config.accountType.title,
+                    subtitle = S(config.accountType.titleRes),
                     icon = Icons.Default.RestartAlt,
                     tint = Ios.Orange,
                     onClick = {

@@ -125,7 +125,7 @@ class NajiWarpVpnService : VpnService() {
         nativeActive.set(false)
         stopStatusTask()
         networkMonitor.bumpGeneration()
-        promoteForeground("در حال آماده‌سازی NajiWarp...")
+        promoteForeground(getString(R.string.nw_notif_preparing))
         NajiWarpEngine.updatePhase(NajiWarpPhase.PREPARING)
 
         engineExecutor.execute {
@@ -267,7 +267,7 @@ class NajiWarpVpnService : VpnService() {
                 "preparing" -> NajiWarpEngine.updatePhase(NajiWarpPhase.PREPARING)
                 "connectingH3", "connectingH2", "reconnecting" -> {
                     NajiWarpEngine.updatePhase(NajiWarpPhase.HANDSHAKE)
-                    updateNotification(if (phaseStr == "connectingH2") "در حال اتصال با HTTP/2..." else "در حال اتصال با HTTP/3...")
+                    updateNotification(getString(if (phaseStr == "connectingH2") R.string.nw_notif_connecting_h2 else R.string.nw_notif_connecting_h3))
                 }
                 "connected", "degraded" -> {
                     val exitIp = json.optString("exit_ipv4").takeIf { it.isNotBlank() && it != "null" }
@@ -285,7 +285,7 @@ class NajiWarpVpnService : VpnService() {
                     val quota = when (currentAccountType) {
                         AccountType.WARP_PLUS.name -> "WARP+"
                         AccountType.ZERO_TRUST.name -> "Zero Trust"
-                        else -> "رایگان"
+                        else -> getString(R.string.nw_quota_free)
                     }
                     NajiWarpEngine.updatePhase(
                         NajiWarpPhase.CONNECTED(
@@ -300,7 +300,7 @@ class NajiWarpVpnService : VpnService() {
                             quotaRemaining = quota
                         )
                     )
-                    updateNotification("متصل (${transport?.uppercase() ?: "H3"})")
+                    updateNotification(getString(R.string.nw_notif_connected, transport?.uppercase() ?: "H3"))
                     com.najishab.one.data.LastEngine.recordNajiWarp(this@NajiWarpVpnService)
                 }
                 "error" -> fail(gen, warning ?: errorCode ?: "خطا در اتصال هسته MASQUE")
@@ -428,7 +428,7 @@ class NajiWarpVpnService : VpnService() {
             .setContentIntent(contentPi)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .addAction(0, "قطع اتصال", stopPi)
+            .addAction(0, getString(R.string.nw_notif_disconnect), stopPi)
             .build()
     }
 

@@ -5037,4 +5037,32 @@ After that it builds the combinations itself, measures every one with a real req
     <string name="nw_wiz_team_placeholder">Team name (e.g. my-team)</string>
     <string name="nw_wiz_open_zt_login">Open the organization sign-in page in a browser</string>
     <string name="nw_wiz_callback_placeholder">Paste the com.cloudflare.warp://… link here</string>
+        <!-- NajiWarp notification -->
+    <string name="nw_notif_preparing">Preparing NajiWarp…</string>
+    <string name="nw_notif_connecting_h2">Connecting over HTTP/2…</string>
+    <string name="nw_notif_connecting_h3">Connecting over HTTP/3…</string>
+    <string name="nw_notif_connected">Connected (%1$s)</string>
+    <string name="nw_notif_disconnect">Disconnect</string>
+    <string name="nw_quota_free">Free</string>
+        <!-- NajiWarp options -->
+    <string name="nw_account_free">Free (Cloudflare WARP)</string>
+    <string name="nw_account_plus">WARP+ (license key)</string>
+    <string name="nw_account_zt">Cloudflare Zero Trust (team)</string>
+    <string name="nw_dns_standard">Standard (1.1.1.1)</string>
+    <string name="nw_dns_malware">Malware protection (1.1.1.2)</string>
+    <string name="nw_dns_family">Family protection (1.1.1.3)</string>
+    <string name="nw_dns_custom">Custom (DNS over HTTPS)</string>
+    <string name="nw_routing_global">All device traffic (VPN full tunnel)</string>
+    <string name="nw_routing_proxy">Local proxy only (SOCKS5 / HTTP)</string>
+    <string name="nw_transport_auto">Automatic (HTTP/3 + HTTP/2 fallback)</string>
+    <string name="nw_transport_h3">HTTP/3 only (QUIC)</string>
+    <string name="nw_transport_h2">HTTP/2 only (TCP/TLS)</string>
+    <string name="nw_tls_chrome">Chrome 155 emulation (default)</string>
+    <string name="nw_tls_default">Standard profile (default TLS)</string>
+    <string name="nw_cc_cubic">CUBIC (standard default)</string>
+    <string name="nw_cc_bbr">BBRv2 (optimized)</string>
+    <string name="nw_cc_bbr3">BBRv3 (fast)</string>
+    <string name="nw_cc_reno">RENO (classic)</string>
+    <string name="nw_endpoint_auto">Automatically pick the best Cloudflare endpoint</string>
+    <string name="nw_endpoint_custom">Manual IP and port (custom endpoint)</string>
 </resources>
