@@ -4964,4 +4964,34 @@
     <string name="ping_tuned_for_games">پینگ بهینه برای بازی‌ها</string>
     <string name="studio_preset_gaming">بازی</string>
     <string name="studio_preset_gaming_sub">همان شکلِ «پایداری»، چون هیچ‌چیزِ داخل لینک اتصال را سریع‌تر نمی‌کند. کاربردِ این یکی، فهرست نقطه‌های پایین است: به کم‌تأخیرترین نقطه‌تان وصلش کنید.</string>
+        <!-- NajiWarp -->
+    <string name="nw_transport_protocol">پروتکل انتقال</string>
+    <string name="nw_tls_profile">پروفایل TLS</string>
+    <string name="nw_http3_cc">کنترل ازدحام HTTP/3</string>
+    <string name="nw_dns_policy">سیاست DNS</string>
+    <string name="nw_routing_mode">حالت اجرا</string>
+    <string name="nw_endpoint_selection">انتخاب اندپوینت</string>
+    <string name="nw_manual_ipv4">آدرس IPv4 دستی</string>
+    <string name="nw_manual_port">پورت دستی</string>
+    <string name="nw_ready">آماده اتصال</string>
+    <string name="nw_preparing">آماده‌سازی تانل...</string>
+    <string name="nw_connecting_masque">در حال اتصال به MASQUE...</string>
+    <string name="nw_handshaking">در حال هندشیک...</string>
+    <string name="nw_connected_cloudflare">متصل به Cloudflare</string>
+    <string name="nw_disconnecting">در حال قطع اتصال...</string>
+    <string name="nw_failed">اتصال ناموفق</string>
+    <string name="nw_tap_disconnect">برای قطع اتصال لمس کنید</string>
+    <string name="nw_tap_connect">برای اتصال لمس کنید</string>
+    <string name="nw_location_ip">موقعیت / IP</string>
+    <string name="nw_ping">پینگ</string>
+    <string name="nw_traffic">ترافیک</string>
+    <string name="nw_settings">تنظیمات</string>
+    <string name="nw_cc_algorithm">الگوریتم ازدحام (CC)</string>
+    <string name="nw_endpoint">اندپوینت</string>
+    <string name="nw_adblock">مسدودساز تبلیغات (Ads Rules)</string>
+    <string name="nw_account_logs">اکانت و گزارش</string>
+    <string name="nw_reset_account">تغییر یا ریست اکانت (اجرای مجدد ویزارد)</string>
+    <string name="nw_close_logs">بستن لاگ‌ها</string>
+    <string name="nw_view_logs">مشاهده لاگ‌های زنده</string>
+    <string name="nw_no_logs">هنوز لاگی ثبت نشده است.</string>
 </resources>

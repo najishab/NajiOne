@@ -4972,4 +4972,34 @@ After that it builds the combinations itself, measures every one with a real req
     <string name="ping_tuned_for_games">Ping tuned for games</string>
     <string name="studio_preset_gaming">Game</string>
     <string name="studio_preset_gaming_sub">The same shape as Steady, because nothing in a link makes a connection faster. What this one is for is the endpoint list below: point it at your lowest-latency endpoint.</string>
+        <!-- NajiWarp -->
+    <string name="nw_transport_protocol">Transport protocol</string>
+    <string name="nw_tls_profile">TLS profile</string>
+    <string name="nw_http3_cc">HTTP/3 congestion control</string>
+    <string name="nw_dns_policy">DNS policy</string>
+    <string name="nw_routing_mode">Routing mode</string>
+    <string name="nw_endpoint_selection">Endpoint selection</string>
+    <string name="nw_manual_ipv4">Manual IPv4 address</string>
+    <string name="nw_manual_port">Manual port</string>
+    <string name="nw_ready">Ready to connect</string>
+    <string name="nw_preparing">Preparing tunnel…</string>
+    <string name="nw_connecting_masque">Connecting to MASQUE…</string>
+    <string name="nw_handshaking">Handshaking…</string>
+    <string name="nw_connected_cloudflare">Connected to Cloudflare</string>
+    <string name="nw_disconnecting">Disconnecting…</string>
+    <string name="nw_failed">Connection failed</string>
+    <string name="nw_tap_disconnect">Tap to disconnect</string>
+    <string name="nw_tap_connect">Tap to connect</string>
+    <string name="nw_location_ip">Location / IP</string>
+    <string name="nw_ping">Ping</string>
+    <string name="nw_traffic">Traffic</string>
+    <string name="nw_settings">Settings</string>
+    <string name="nw_cc_algorithm">Congestion algorithm (CC)</string>
+    <string name="nw_endpoint">Endpoint</string>
+    <string name="nw_adblock">Ad blocker (Ads Rules)</string>
+    <string name="nw_account_logs">Account &amp; logs</string>
+    <string name="nw_reset_account">Change or reset account (run wizard again)</string>
+    <string name="nw_close_logs">Close logs</string>
+    <string name="nw_view_logs">View live logs</string>
+    <string name="nw_no_logs">No logs yet.</string>
 </resources>

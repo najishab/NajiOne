@@ -4824,4 +4824,34 @@
     <string name="default_subs_all_failed">Не удалось подключиться: %1$s. Проверьте соединение и повторите попытку</string>
     <string name="default_subs_none_new">Новых подходящих серверов не найдено (дубликаты или нерабочие)</string>
     <string name="default_subs_error">Ошибка при получении серверов</string>
+        <!-- NajiWarp -->
+    <string name="nw_transport_protocol">Протокол транспорта</string>
+    <string name="nw_tls_profile">Профиль TLS</string>
+    <string name="nw_http3_cc">Контроль перегрузки HTTP/3</string>
+    <string name="nw_dns_policy">Политика DNS</string>
+    <string name="nw_routing_mode">Режим маршрутизации</string>
+    <string name="nw_endpoint_selection">Выбор точки подключения</string>
+    <string name="nw_manual_ipv4">Ручной адрес IPv4</string>
+    <string name="nw_manual_port">Ручной порт</string>
+    <string name="nw_ready">Готово к подключению</string>
+    <string name="nw_preparing">Подготовка туннеля…</string>
+    <string name="nw_connecting_masque">Подключение к MASQUE…</string>
+    <string name="nw_handshaking">Рукопожатие…</string>
+    <string name="nw_connected_cloudflare">Подключено к Cloudflare</string>
+    <string name="nw_disconnecting">Отключение…</string>
+    <string name="nw_failed">Не удалось подключиться</string>
+    <string name="nw_tap_disconnect">Нажмите, чтобы отключиться</string>
+    <string name="nw_tap_connect">Нажмите, чтобы подключиться</string>
+    <string name="nw_location_ip">Местоположение / IP</string>
+    <string name="nw_ping">Пинг</string>
+    <string name="nw_traffic">Трафик</string>
+    <string name="nw_settings">Настройки</string>
+    <string name="nw_cc_algorithm">Алгоритм перегрузки (CC)</string>
+    <string name="nw_endpoint">Точка подключения</string>
+    <string name="nw_adblock">Блокировка рекламы (Ads Rules)</string>
+    <string name="nw_account_logs">Аккаунт и журналы</string>
+    <string name="nw_reset_account">Сменить или сбросить аккаунт (запустить мастер снова)</string>
+    <string name="nw_close_logs">Закрыть журналы</string>
+    <string name="nw_view_logs">Журналы в реальном времени</string>
+    <string name="nw_no_logs">Журналов пока нет.</string>
 </resources>

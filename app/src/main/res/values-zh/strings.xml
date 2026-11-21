@@ -4824,4 +4824,34 @@
     <string name="default_subs_all_failed">无法连接 %1$s。请检查网络后重试</string>
     <string name="default_subs_none_new">未找到新的有效服务器（重复或无效）</string>
     <string name="default_subs_error">获取服务器时出错</string>
+        <!-- NajiWarp -->
+    <string name="nw_transport_protocol">传输协议</string>
+    <string name="nw_tls_profile">TLS 配置文件</string>
+    <string name="nw_http3_cc">HTTP/3 拥塞控制</string>
+    <string name="nw_dns_policy">DNS 策略</string>
+    <string name="nw_routing_mode">路由模式</string>
+    <string name="nw_endpoint_selection">端点选择</string>
+    <string name="nw_manual_ipv4">手动 IPv4 地址</string>
+    <string name="nw_manual_port">手动端口</string>
+    <string name="nw_ready">准备连接</string>
+    <string name="nw_preparing">正在准备隧道…</string>
+    <string name="nw_connecting_masque">正在连接 MASQUE…</string>
+    <string name="nw_handshaking">正在握手…</string>
+    <string name="nw_connected_cloudflare">已连接到 Cloudflare</string>
+    <string name="nw_disconnecting">正在断开…</string>
+    <string name="nw_failed">连接失败</string>
+    <string name="nw_tap_disconnect">点击断开</string>
+    <string name="nw_tap_connect">点击连接</string>
+    <string name="nw_location_ip">位置 / IP</string>
+    <string name="nw_ping">延迟</string>
+    <string name="nw_traffic">流量</string>
+    <string name="nw_settings">设置</string>
+    <string name="nw_cc_algorithm">拥塞算法 (CC)</string>
+    <string name="nw_endpoint">端点</string>
+    <string name="nw_adblock">广告拦截 (Ads Rules)</string>
+    <string name="nw_account_logs">账户与日志</string>
+    <string name="nw_reset_account">更改或重置账户（重新运行向导）</string>
+    <string name="nw_close_logs">关闭日志</string>
+    <string name="nw_view_logs">查看实时日志</string>
+    <string name="nw_no_logs">暂无日志。</string>
 </resources>

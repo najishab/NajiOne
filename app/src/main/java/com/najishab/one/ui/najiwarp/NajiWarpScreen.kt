@@ -1,6 +1,7 @@
 package com.najishab.one.ui.najiwarp
 
-import com.najishab.one.store.tr
+import com.najishab.one.R
+import com.najishab.one.utils.S
 
 import android.app.Activity
 import android.net.VpnService
@@ -124,56 +125,56 @@ fun NajiWarpScreen(onBack: () -> Unit) {
         BackHandler { subPage = null }
         when (subPage) {
             "transport" -> IosPickerScreen(
-                title = tr("پروتکل انتقال", "Transport protocol"),
+                title = S(R.string.nw_transport_protocol),
                 options = TransportMode.entries.map { IosOption(it.name, it.title) },
                 selectedKey = config.transportMode.name,
                 onSelect = { k -> updateConfig(config.copy(transportMode = TransportMode.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "fingerprint" -> IosPickerScreen(
-                title = tr("پروفایل TLS", "TLS profile"),
+                title = S(R.string.nw_tls_profile),
                 options = MasqueProfile.entries.map { IosOption(it.name, it.title) },
                 selectedKey = config.masqueProfile.name,
                 onSelect = { k -> updateConfig(config.copy(masqueProfile = MasqueProfile.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "bbr" -> IosPickerScreen(
-                title = tr("کنترل ازدحام HTTP/3", "HTTP/3 congestion control"),
+                title = S(R.string.nw_http3_cc),
                 options = BbrAlgorithm.entries.map { IosOption(it.name, it.title) },
                 selectedKey = config.bbrAlgorithm.name,
                 onSelect = { k -> updateConfig(config.copy(bbrAlgorithm = BbrAlgorithm.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "dns" -> IosPickerScreen(
-                title = tr("سیاست DNS", "DNS policy"),
+                title = S(R.string.nw_dns_policy),
                 options = DnsPolicy.entries.map { IosOption(it.name, it.title) },
                 selectedKey = config.dnsPolicy.name,
                 onSelect = { k -> updateConfig(config.copy(dnsPolicy = DnsPolicy.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "routing" -> IosPickerScreen(
-                title = tr("حالت اجرا", "Routing mode"),
+                title = S(R.string.nw_routing_mode),
                 options = RoutingMode.entries.map { IosOption(it.name, it.title) },
                 selectedKey = config.routingMode.name,
                 onSelect = { k -> updateConfig(config.copy(routingMode = RoutingMode.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "endpoint_mode" -> IosPickerScreen(
-                title = tr("انتخاب اندپوینت", "Endpoint selection"),
+                title = S(R.string.nw_endpoint_selection),
                 options = EndpointMode.entries.map { IosOption(it.name, it.title) },
                 selectedKey = config.endpointMode.name,
                 onSelect = { k -> updateConfig(config.copy(endpointMode = EndpointMode.valueOf(k))) },
                 onBack = { subPage = null }
             )
             "endpoint_v4" -> IosTextScreen(
-                title = tr("آدرس IPv4 دستی", "Manual IPv4 address"),
+                title = S(R.string.nw_manual_ipv4),
                 value = config.customEndpointV4,
                 onValueChange = { updateConfig(config.copy(customEndpointV4 = it)) },
                 placeholder = "162.159.198.2",
                 onBack = { subPage = null }
             )
             "endpoint_port" -> IosTextScreen(
-                title = tr("پورت دستی", "Manual port"),
+                title = S(R.string.nw_manual_port),
                 value = config.customEndpointPort.toString(),
                 numeric = true,
                 onValueChange = { raw ->
@@ -243,13 +244,13 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                     Spacer(Modifier.width(8.dp))
                     Text(
                         text = when (val p = phase) {
-                            is NajiWarpPhase.IDLE -> tr("آماده اتصال", "Ready to connect")
-                            is NajiWarpPhase.PREPARING -> tr("آماده‌سازی تانل...", "Preparing tunnel…")
-                            is NajiWarpPhase.CONNECTING -> tr("در حال اتصال به MASQUE...", "Connecting to MASQUE…")
-                            is NajiWarpPhase.HANDSHAKE -> tr("در حال هندشیک...", "Handshaking…")
-                            is NajiWarpPhase.CONNECTED -> tr("متصل به Cloudflare", "Connected to Cloudflare") + " (${p.transport ?: "H3"})"
-                            is NajiWarpPhase.DISCONNECTING -> tr("در حال قطع اتصال...", "Disconnecting…")
-                            is NajiWarpPhase.FAILED -> tr("اتصال ناموفق", "Connection failed")
+                            is NajiWarpPhase.IDLE -> S(R.string.nw_ready)
+                            is NajiWarpPhase.PREPARING -> S(R.string.nw_preparing)
+                            is NajiWarpPhase.CONNECTING -> S(R.string.nw_connecting_masque)
+                            is NajiWarpPhase.HANDSHAKE -> S(R.string.nw_handshaking)
+                            is NajiWarpPhase.CONNECTED -> S(R.string.nw_connected_cloudflare) + " (${p.transport ?: "H3"})"
+                            is NajiWarpPhase.DISCONNECTING -> S(R.string.nw_disconnecting)
+                            is NajiWarpPhase.FAILED -> S(R.string.nw_failed)
                         },
                         color = Color.White,
                         fontSize = 13.sp,
@@ -296,7 +297,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
 
             Spacer(Modifier.height(14.dp))
             Text(
-                text = if (isConnected || isConnecting) tr("برای قطع اتصال لمس کنید", "Tap to disconnect") else tr("برای اتصال لمس کنید", "Tap to connect"),
+                text = if (isConnected || isConnecting) S(R.string.nw_tap_disconnect) else S(R.string.nw_tap_connect),
                 color = Color.White.copy(alpha = 0.6f),
                 fontSize = 13.sp
             )
@@ -323,18 +324,18 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                         .padding(vertical = 14.dp, horizontal = 12.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    MetricBadge(tr("موقعیت / IP", "Location / IP"), "${conn.colo ?: "CF"}\n${conn.exitIp ?: "-"}")
-                    MetricBadge(tr("پینگ", "Ping"), if (conn.pingMs > 0) "${conn.pingMs} ms" else "...")
-                    MetricBadge(tr("ترافیک", "Traffic"), "↓ ${formatBytes(conn.rxBytes)}\n↑ ${formatBytes(conn.txBytes)}")
+                    MetricBadge(S(R.string.nw_location_ip), "${conn.colo ?: "CF"}\n${conn.exitIp ?: "-"}")
+                    MetricBadge(S(R.string.nw_ping), if (conn.pingMs > 0) "${conn.pingMs} ms" else "...")
+                    MetricBadge(S(R.string.nw_traffic), "↓ ${formatBytes(conn.rxBytes)}\n↑ ${formatBytes(conn.txBytes)}")
                 }
             }
 
             Spacer(Modifier.height(14.dp))
 
-            SettingsSectionHeader(text = tr("تنظیمات", "Settings"))
+            SettingsSectionHeader(text = S(R.string.nw_settings))
             SettingsGroup {
                 SettingsRow(
-                    title = tr("حالت اجرا", "Routing mode"),
+                    title = S(R.string.nw_routing_mode),
                     value = if (config.routingMode == RoutingMode.GLOBAL) "VPN" else "Proxy",
                     icon = Icons.Default.Router,
                     tint = Ios.Blue,
@@ -342,7 +343,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
                 Separator()
                 SettingsRow(
-                    title = tr("پروتکل انتقال", "Transport protocol"),
+                    title = S(R.string.nw_transport_protocol),
                     value = config.transportMode.wireValue,
                     icon = Icons.Default.Speed,
                     tint = accentColor,
@@ -350,7 +351,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
                 Separator()
                 SettingsRow(
-                    title = tr("پروفایل TLS", "TLS profile"),
+                    title = S(R.string.nw_tls_profile),
                     value = config.masqueProfile.wireValue,
                     icon = Icons.Default.Public,
                     tint = Ios.Green,
@@ -358,7 +359,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
                 Separator()
                 SettingsRow(
-                    title = tr("الگوریتم ازدحام (CC)", "Congestion algorithm (CC)"),
+                    title = S(R.string.nw_cc_algorithm),
                     value = config.bbrAlgorithm.wireValue,
                     icon = Icons.Default.Bolt,
                     tint = Ios.Indigo,
@@ -366,7 +367,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
                 Separator()
                 SettingsRow(
-                    title = tr("اندپوینت", "Endpoint"),
+                    title = S(R.string.nw_endpoint),
                     value = config.endpointMode.wireValue,
                     icon = Icons.Default.Tune,
                     tint = Ios.Teal,
@@ -375,20 +376,20 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 if (config.endpointMode == EndpointMode.CUSTOM) {
                     Separator()
                     SettingsRow(
-                        title = tr("آدرس IPv4 دستی", "Manual IPv4 address"),
+                        title = S(R.string.nw_manual_ipv4),
                         value = config.customEndpointV4,
                         onClick = { subPage = "endpoint_v4" }
                     )
                     Separator()
                     SettingsRow(
-                        title = tr("پورت دستی", "Manual port"),
+                        title = S(R.string.nw_manual_port),
                         value = config.customEndpointPort.toString(),
                         onClick = { subPage = "endpoint_port" }
                     )
                 }
                 Separator()
                 SettingsRow(
-                    title = tr("سیاست DNS", "DNS policy"),
+                    title = S(R.string.nw_dns_policy),
                     value = config.dnsPolicy.ipv4,
                     icon = Icons.Default.Dns,
                     tint = Ios.Blue,
@@ -396,7 +397,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
                 Separator()
                 SettingsToggle(
-                    title = tr("مسدودساز تبلیغات (Ads Rules)", "Ad blocker (Ads Rules)"),
+                    title = S(R.string.nw_adblock),
                     checked = config.enableAdblock,
                     onCheckedChange = { updateConfig(config.copy(enableAdblock = it)) },
                     icon = Icons.Default.Shield,
@@ -404,10 +405,10 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
             }
 
-            SettingsSectionHeader(text = tr("اکانت و گزارش", "Account & logs"))
+            SettingsSectionHeader(text = S(R.string.nw_account_logs))
             SettingsGroup {
                 SettingsRow(
-                    title = tr("تغییر یا ریست اکانت (اجرای مجدد ویزارد)", "Change or reset account (run wizard again)"),
+                    title = S(R.string.nw_reset_account),
                     subtitle = config.accountType.title,
                     icon = Icons.Default.RestartAlt,
                     tint = Ios.Orange,
@@ -418,7 +419,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                 )
                 Separator()
                 SettingsRow(
-                    title = if (showLogs) tr("بستن لاگ‌ها", "Close logs") else tr("مشاهده لاگ‌های زنده", "View live logs"),
+                    title = if (showLogs) S(R.string.nw_close_logs) else S(R.string.nw_view_logs),
                     icon = Icons.Default.Terminal,
                     tint = Ios.Gray,
                     onClick = { showLogs = !showLogs }
@@ -435,7 +436,7 @@ fun NajiWarpScreen(onBack: () -> Unit) {
                         .padding(12.dp)
                 ) {
                     if (logs.isEmpty()) {
-                        Text(tr("هنوز لاگی ثبت نشده است.", "No logs yet."), color = Color.Gray, fontSize = 11.sp)
+                        Text(S(R.string.nw_no_logs), color = Color.Gray, fontSize = 11.sp)
                     } else {
                         logs.takeLast(15).forEach { line ->
                             Text(line, color = Color.White.copy(alpha = 0.85f), fontSize = 11.sp, lineHeight = 16.sp)
